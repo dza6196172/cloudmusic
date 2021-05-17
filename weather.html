@@ -14,7 +14,7 @@
   getDataOrder()
   function getDataOrder() {
     let _this = this;
-    let Url = 'http://toy-vox-api.plovehj.com/weather.php';
+    let Url = 'http://toy-vox-api.plovehj.com/weather/weather.php';
     axios({
       method: 'get',
       url: Url,
@@ -40,7 +40,7 @@
             <div class="secondwrap">
               <div class="time">
                 <div class="week">${item.week}</div>
-                <div class="date">${item.day}</div>
+                <div class="date">${item.date}</div>
               </div>
               <div class="icon">
                 <img src="./baidu/yujiaxue.png" alt="">

@@ -1,6 +1,8 @@
 @font-face {
-  font-family: "iconfont"; /* Project id  */
-  src: url('iconfont.ttf?t=1621162595650') format('truetype');
+  font-family: "iconfont"; /* Project id 2552714 */
+  src: url('iconfont.woff2?t=1621235346270') format('woff2'),
+       url('iconfont.woff?t=1621235346270') format('woff'),
+       url('iconfont.ttf?t=1621235346270') format('truetype');
 }
 
 .iconfont {
@@ -9,6 +11,34 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-cloud:before {
+  content: "\e609";
+}
+
+.icon-music:before {
+  content: "\e627";
+}
+
+.icon-xin:before {
+  content: "\e6e0";
+}
+
+.icon-gedan:before {
+  content: "\e636";
+}
+
+.icon-download:before {
+  content: "\e74d";
+}
+
+.icon-shoucangxinyuandanyuanwangqingdantuijian:before {
+  content: "\e626";
+}
+
+.icon-diantai:before {
+  content: "\e693";
 }
 
 .icon-arrow-right:before {
@@ -39,6 +69,10 @@
   content: "\e7b1";
 }
 
+.icon-arrow-down:before {
+  content: "\e7b2";
+}
+
 .icon-search:before {
   content: "\e7b3";
 }
@@ -49,5 +83,9 @@
 
 .icon-square:before {
   content: "\e7d1";
+}
+
+.icon-danjuzhuanhuan:before {
+  content: "\e7d2";
 }
 

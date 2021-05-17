@@ -1,19 +1,37 @@
 <template>
-  <div>
+  <div class="home">
     <header-nav></header-nav>
+    <div class="maincontent">
+      <div class="left"><side-nav></side-nav></div>
+      <div class="right"><router-view/></div>
+    </div>
   </div>
 </template>
 
 <script>
 import HeaderNav from '@/components/headerNav.vue'
+import sideNav from '@/components/sideNav.vue'
 export default {
   name: "home",
   components:{
-    HeaderNav
+    HeaderNav,
+    sideNav
   }
 }
 </script>
 
 <style lang="scss" scoped>
-
+  .maincontent{
+    display: flex;
+    height: calc(100vh - 60px);
+    .left{
+      height: 100%;
+      border-right: 1px solid #e1e1e1;
+      overflow: auto;
+    }
+    .right{
+      width: 100%;
+      overflow: auto;
+    }
+  }
 </style>
