@@ -1,3 +1,5 @@
 export default URL = {
-  banner:'/banner'
+  banner:'/banner',
+  recommend:'/personalized',
+  privatecontent:'/personalized/privatecontent'
 }

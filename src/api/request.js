@@ -5,8 +5,22 @@ export const indexApi = {
   getbanner:async function(params) {
     return axios({
       url: URL.banner,
-      method: "post",
+      method: "get",
       params,
     });
-  }
+  },
+  getrecommend:async function(params) {
+    return axios({
+      url: URL.recommend,
+      method: "get",
+      params,
+    });
+  },
+  getprivatecontent:async function(params) {
+    return axios({
+      url: URL.privatecontent,
+      method: "get",
+      params,
+    });
+  },
 }

@@ -11,7 +11,7 @@ const routes = [
   {
     path: '/',
     redirect: {
-      name: 'index'
+      name: 'recommend'
     }
   },
   {

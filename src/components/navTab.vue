@@ -81,6 +81,7 @@ export default {
 @import "@/assets/css/common.scss";
 .navtab {
   position: fixed;
+  z-index: 10;
   width: 100%;
   height: 60px;
   padding: 20px;

@@ -1,1 +1,19 @@
-$red:#ec4141
+$red:#ec4141;
+
+.contenttitle{
+  font-weight: 700;
+  font-size: 20px;
+  position: relative;
+  width: fit-content;
+  margin-bottom: 10px;
+  &::after{
+    position: absolute;
+    content: '\e743';
+    font-family: 'iconfont';
+    font-weight: 100;
+    font-size: 24px;
+    right: -25px;
+    top: 55%;
+    transform: translateY(-50%);
+  }
+}
