@@ -16,4 +16,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.content{
+  height: calc(100vh - 180px);
+  overflow: auto;
+}
 </style>

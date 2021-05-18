@@ -23,4 +23,25 @@ export const indexApi = {
       params,
     });
   },
+  getnewsong:async function(params) {
+    return axios({
+      url: URL.newsong,
+      method: "get",
+      params,
+    });
+  },
+  getrecommendmv:async function(params) {
+    return axios({
+      url: URL.recommendmv,
+      method: "get",
+      params,
+    });
+  },
+  getdjprogram:async function(params) {
+    return axios({
+      url: URL.djprogram,
+      method: "get",
+      params,
+    });
+  },
 }

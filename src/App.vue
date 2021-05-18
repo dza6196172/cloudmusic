@@ -5,7 +5,7 @@
 </template>
 
 <style lang="scss">
-::-webkit-scrollbar {
-  display: none; /* Chrome Safari */
-}
+// ::-webkit-scrollbar {
+//   display: none; /* Chrome Safari */
+// }
 </style>
