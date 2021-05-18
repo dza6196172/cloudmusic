@@ -26,7 +26,7 @@ export default {
 <style lang="scss" scoped>
   .maincontent{
     display: flex;
-    height: calc(100vh - 120px);
+    height: calc(100vh - 130px);
     .left{
       height: 100%;
       border-right: 1px solid #e1e1e1;

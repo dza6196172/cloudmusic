@@ -17,7 +17,7 @@ export default {
 
 <style lang="scss" scoped>
 .content{
-  height: calc(100vh - 180px);
+  height: calc(100vh - 190px);
   overflow: auto;
 }
 </style>
