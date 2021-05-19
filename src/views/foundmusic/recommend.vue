@@ -45,7 +45,7 @@
     <div class="newsonglist">
       <div class="contenttitle">最新音乐</div>
       <div class="content">
-        <div class="playitem" v-for="(item, index) in newsonglist" :key="index">
+        <div class="playitem" v-for="(item, index) in newsonglist" :key="index" @click="playmusic(item)">
           <div class="pic">
             <img :src="item.picUrl" alt="" width="100%" /><span class="iconfont"
               >&#xe664;</span
@@ -185,6 +185,9 @@ export default {
         }
       });
     },
+    playmusic(item){
+      this.$store.commit('getmusicurl',item.id)
+    }
   },
 };
 </script>

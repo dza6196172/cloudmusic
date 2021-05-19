@@ -1,8 +1,10 @@
 <template>
   <div class="bottomplayer">
     <audio
-      src="http://m7.music.126.net/20210519102411/73f89cb5794470c24d9acdabd789972c/ymusic/0fd6/4f65/43ed/a8772889f38dfcb91c04da915b301617.mp3"
+      id="musictest"
+      :src="currentmusic"
       ref="music"
+      @canplay="gettime()"
     ></audio>
     <div class="control">
       <div class="topcontrol">
@@ -17,7 +19,7 @@
       </div>
       <div class="bottombar">
         <div class="line">
-          <div class="redline" :style="{ width: percent }"></div>
+          <div class="redline" :style="{ width: getredbar }"></div>
         </div>
       </div>
     </div>
@@ -30,24 +32,57 @@ export default {
   data() {
     return {
       isplay: false,
-      currenttime:0,
-      percent:0,
+      percent: 0,
+      currentmusic: "",
+      currenttime: 0,
+      musicduration: 1,
+      currenttimer: null,
     };
   },
+  created() {},
+  watch: {
+    currentmusicurl() {
+      let that = this;
+      if (this.currentmusic != "") {
+        that.controlplay();
+      }
+
+      that.currentmusic = that.$store.state.musicUrl;
+      that.$refs.music.addEventListener("canplay", function () {
+        that.controlplay();
+      });
+    },
+  },
   computed: {
-    currenttime(){
-      return (this.$refs.music.currentTime / this.$refs.music.duration) * 100 + "%"
-    }
+    getredbar() {
+      return (this.currenttime / this.musicduration) * 100 + "%";
+    },
+    currentmusicurl() {
+      return this.$store.state.musicUrl;
+    },
   },
   methods: {
     controlplay() {
       if (this.$refs.music.paused) {
         this.isplay = true;
         this.$refs.music.play();
-        this.currenttime = this.$refs.music.currentTime+1
+        this.getprogress(0);
       } else {
         this.isplay = false;
         this.$refs.music.pause();
+        this.getprogress(1);
+      }
+    },
+    gettime() {
+      this.musicduration = this.$refs.music.duration;
+    },
+    getprogress(index) {
+      if (index == 0) {
+        this.currenttimer = setInterval(() => {
+          this.currenttime = this.$refs.music.currentTime;
+        }, 1000);
+      } else {
+        clearInterval(this.currenttimer);
       }
     },
   },

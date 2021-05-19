@@ -5,4 +5,5 @@ export default URL = {
   newsong:'/personalized/newsong',
   recommendmv:'/personalized/mv',
   djprogram:'/personalized/djprogram',
+  musicurl:'/song/url',
 }

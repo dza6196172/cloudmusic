@@ -44,4 +44,11 @@ export const indexApi = {
       params,
     });
   },
+  getmusicurl:async function(params) {
+    return axios({
+      url: URL.musicurl,
+      method: "get",
+      params,
+    });
+  },
 }
