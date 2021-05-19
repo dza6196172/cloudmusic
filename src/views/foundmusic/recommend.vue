@@ -80,12 +80,14 @@
           </div>
           <div class="text">
             <div class="mvname">{{ item.name }}</div>
-            <div class="artist" v-for="(item1, index1) in item.artists">
-              {{
-                index1 == item.artists.length - 1
-                  ? item1.name
-                  : item1.name + " / "
-              }}
+            <div class="artist">
+              <span v-for="(item1, index1) in item.artists">
+                {{
+                  index1 == item.artists.length - 1
+                    ? item1.name
+                    : item1.name + " / "
+                }}</span
+              >
             </div>
           </div>
         </div>
@@ -390,6 +392,9 @@ export default {
           .artist {
             font-size: 13px;
             color: gray;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
           }
         }
       }
