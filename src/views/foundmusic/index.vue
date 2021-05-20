@@ -1,22 +1,63 @@
 <template>
   <div class="index">
-    <nav-tab></nav-tab>
-    <div class="content"><router-view/></div>
+    <nav-tab :navlist="navlist"></nav-tab>
+    <div class="content">
+      <keep-alive v-if="$route.meta.keepalive">
+        <router-view />
+      </keep-alive>
+      <router-view v-else></router-view>
+    </div>
   </div>
 </template>
 
 <script>
-import navTab from '@/components/navTab.vue'
+import navTab from "@/components/navTab.vue";
 export default {
   name: "index",
-  components:{
-    navTab
-  }
-}
+  components: {
+    navTab,
+  },
+  data() {
+    return {
+      navlist: [
+        {
+          name: "个性推荐",
+          isactive: true,
+          link: "recommend",
+        },
+        {
+          name: "歌单",
+          isactive: false,
+          link: "songlist",
+        },
+        {
+          name: "主播电台",
+          isactive: false,
+          link: "recommend",
+        },
+        {
+          name: "排行榜",
+          isactive: false,
+          link: "recommend",
+        },
+        {
+          name: "歌手",
+          isactive: false,
+          link: "recommend",
+        },
+        {
+          name: "最新音乐",
+          isactive: false,
+          link: "recommend",
+        },
+      ],
+    };
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-.content{
+.content {
   height: calc(100vh - 190px);
   overflow: auto;
 }

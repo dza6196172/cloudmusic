@@ -23,38 +23,7 @@ export default {
     navlist: {
       type: Array,
       default() {
-        return [
-          {
-            name: "个性推荐",
-            isactive: true,
-            link: "recommend",
-          },
-          {
-            name: "歌单",
-            isactive: false,
-            link: "recommend",
-          },
-          {
-            name: "主播电台",
-            isactive: false,
-            link: "recommend",
-          },
-          {
-            name: "排行榜",
-            isactive: false,
-            link: "recommend",
-          },
-          {
-            name: "歌手",
-            isactive: false,
-            link: "recommend",
-          },
-          {
-            name: "最新音乐",
-            isactive: false,
-            link: "recommend",
-          },
-        ];
+        return [];
       },
     },
   },

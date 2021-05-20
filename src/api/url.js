@@ -6,4 +6,5 @@ export default URL = {
   recommendmv:'/personalized/mv',
   djprogram:'/personalized/djprogram',
   musicurl:'/song/url',
+  musicinfo:'/song/detail'
 }

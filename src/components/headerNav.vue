@@ -7,8 +7,8 @@
         </div>
         <div class="search">
           <div class="goback">
-            <div class="back"><span class="iconfont">&#xe744;</span></div>
-            <div class="go"><span class="iconfont">&#xe743;</span></div>
+            <div class="back" @click="canback()"><span class="iconfont">&#xe744;</span></div>
+            <div class="go" @click="$router.go(1)"><span class="iconfont">&#xe743;</span></div>
           </div>
           <div class="searchbar">
             <span class="iconfont">&#xe7b3;</span>
@@ -55,6 +55,9 @@ export default {
     refreshpage() {
       location.reload();
     },
+    canback(){
+      console.log(window.history);
+    }
   },
 };
 </script>
@@ -109,6 +112,7 @@ export default {
           line-height: 25px;
           border-radius: 50%;
           left: 0;
+          cursor: pointer;
         }
         .go {
           -webkit-app-region: no-drag;
@@ -120,6 +124,7 @@ export default {
           text-align: center;
           line-height: 25px;
           border-radius: 50%;
+          cursor: pointer;
         }
       }
       .searchbar {

@@ -28,7 +28,18 @@ const routes = [
             path: '/recommend',
             name: 'recommend',
             component: () => import('@/views/foundmusic/recommend.vue'),
-          }
+            meta:{
+              keepalive:true
+            }
+          },
+          {
+            path: '/songlist',
+            name: 'songlist',
+            component: () => import('@/views/foundmusic/songlist.vue'),
+            meta:{
+              keepalive:true
+            }
+          },
         ]
       }
     ]

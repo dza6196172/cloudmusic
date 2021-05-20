@@ -6,6 +6,16 @@
       ref="music"
       @canplay="gettime()"
     ></audio>
+    <div class="songinfo">
+      <div class="musicpic">
+        <img :src="musicinfo.al.picUrl" alt="" width="50px" height="50px" />
+      </div>
+
+      <div class="musictext">
+        <div class="musicname">{{ musicinfo.name }}<span class="iconfont" v-if="musicinfo.name != ''">&#xe6e0;</span></div>
+        <div class="musicartist"><span v-for="(item,index) in musicinfo.ar" :key="index">{{ index==musicinfo.ar.length-1?item.name:item.name+' / ' }}</span></div>
+      </div>
+    </div>
     <div class="control">
       <div class="topcontrol">
         <div class="playmode"><span class="iconfont">&#xe6a0;</span></div>
@@ -37,21 +47,36 @@ export default {
       currenttime: 0,
       musicduration: 1,
       currenttimer: null,
+      musicinfo: {
+        name: "",
+        al: {
+          picUrl: "",
+        },
+        ar: [
+          {
+            name: "",
+          },
+        ],
+      },
     };
   },
   created() {},
   watch: {
     currentmusicurl() {
       let that = this;
-      if (this.currentmusic != "") {
-        that.controlplay();
+      if (that.currentmusic == "") {
+        that.currentmusic = that.$store.state.musicUrl;
+        that.$refs.music.addEventListener("canplay", function () {
+          that.controlplay();
+        });
+      } else {
+        that.currentmusic = that.$store.state.musicUrl;
+        that.$refs.music.load();
       }
-
-      that.currentmusic = that.$store.state.musicUrl;
-      that.$refs.music.addEventListener("canplay", function () {
-        that.controlplay();
-      });
     },
+    currentmusicinfo(){
+      this.musicinfo = this.$store.state.musicinfo;
+    }
   },
   computed: {
     getredbar() {
@@ -60,6 +85,9 @@ export default {
     currentmusicurl() {
       return this.$store.state.musicUrl;
     },
+    currentmusicinfo(){
+      return this.$store.state.musicinfo
+    }
   },
   methods: {
     controlplay() {
@@ -99,6 +127,33 @@ export default {
   height: 70px;
   background-color: white;
   width: 100%;
+  .songinfo {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    .musicpic {
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    .musictext{
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      font-size: 15px;
+      margin-left: 10px;
+      .musicname{
+        .iconfont{
+          margin-left: 10px;
+          cursor: pointer;
+        }
+      }
+      .musicartist{
+        font-size: 13px;
+      }
+    }
+  }
   .control {
     width: 375px;
     height: 100%;

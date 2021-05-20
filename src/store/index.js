@@ -7,15 +7,20 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     musicid:'',
-    musicUrl:''
+    musicUrl:'',
+    musicinfo:''
   },
   mutations: {
     getmusicurl(state,url){
       indexApi.getmusicurl({
         id:url
       }).then(res => {
-        console.log(res);
         state.musicUrl = res.data[0].url
+      })
+      indexApi.getmusicinfo({
+        ids:url
+      }).then(res => {
+        state.musicinfo = res.songs[0]
       })
     }
   },
