@@ -27,19 +27,28 @@ export default {
       },
     },
   },
+  created(){
+    this.isactive()
+  },
+  watch:{
+    $route(){
+      this.isactive()
+    }
+  },
   methods: {
     changeactive(item) {
-      if (item.isactive == true) {
-        return;
-      }
-      item.isactive = true;
-      this.navlist.forEach((item1) => {
-        if (item.name !== item1.name) {
-          item1.isactive = false;
-        }
-      });
       this.$router.push({
         name: item.link,
+      });
+      this.isactive()
+    },
+    isactive() {
+      this.navlist.forEach((item) => {
+        if (item.link !== this.$route.name) {
+          item.isactive = false;
+        } else {
+          item.isactive = true;
+        }
       });
     },
   },
