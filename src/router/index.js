@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from '../store'
 
 const routerPush = VueRouter.prototype.push
 VueRouter.prototype.push = function push(location) {
@@ -45,7 +46,13 @@ const routes = [
     ]
   }
 ]
-
+router.beforeEach((to, from, next) => {
+  if (to.path == from.path) {
+    this.$store.state.canback = false;
+  }else{
+    this.$store.state.canback = true
+  }
+});
 const router = new VueRouter({
   mode: 'hash',
   base: process.env.BASE_URL,

@@ -7,8 +7,12 @@
         </div>
         <div class="search">
           <div class="goback">
-            <div class="back" @click="canback()"><span class="iconfont">&#xe744;</span></div>
-            <div class="go" @click="$router.go(1)"><span class="iconfont">&#xe743;</span></div>
+            <div class="back" @click="back()">
+              <span class="iconfont">&#xe744;</span>
+            </div>
+            <div class="go" @click="$router.go(1)">
+              <span class="iconfont">&#xe743;</span>
+            </div>
           </div>
           <div class="searchbar">
             <span class="iconfont">&#xe7b3;</span>
@@ -51,13 +55,30 @@
 <script>
 export default {
   name: "headerNav",
+  data(){
+    return {
+      iahideback:true
+    }
+  },
+  watch:{
+    canback(){
+      this.ishideback = !this.$store.state.canback
+    }
+  },
+  computed:{
+    canback(){
+      return this.$store.state.canback
+    }
+  },
   methods: {
     refreshpage() {
       location.reload();
     },
-    canback(){
-      console.log(window.history);
-    }
+    back() {
+      if(this.is)
+      
+      this.$router.back();
+    },
   },
 };
 </script>

@@ -8,7 +8,8 @@ export default new Vuex.Store({
   state: {
     musicid:'',
     musicUrl:'',
-    musicinfo:''
+    musicinfo:'',
+    canback:false
   },
   mutations: {
     getmusicurl(state,url){
