@@ -46,13 +46,8 @@ const routes = [
     ]
   }
 ]
-router.beforeEach((to, from, next) => {
-  if (to.path == from.path) {
-    this.$store.state.canback = false;
-  }else{
-    this.$store.state.canback = true
-  }
-});
+
+
 const router = new VueRouter({
   mode: 'hash',
   base: process.env.BASE_URL,

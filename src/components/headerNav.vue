@@ -7,16 +7,20 @@
         </div>
         <div class="search">
           <div class="goback">
-            <div class="back" @click="back()">
-              <span class="iconfont">&#xe744;</span>
+            <div class="back" @click="canback()">
+              <span
+                class="iconfont"
+                :style="{ opacity: currentindex == 0 ? '.2' : '.8' }"
+                >&#xe744;</span
+              >
             </div>
-            <div class="go" @click="$router.go(1)">
-              <span class="iconfont">&#xe743;</span>
+            <div class="go" @click="forward()">
+              <span class="iconfont" :style="{ opacity: (currentindex == routehistory.length) ? '.2' : '.8' }">&#xe743;</span>
             </div>
           </div>
           <div class="searchbar">
-            <span class="iconfont">&#xe7b3;</span>
-            <input type="text" placeholder="搜索" />
+            <span class="iconfont" @click="search()">&#xe7b3;</span>
+            <input type="text" v-model="searchcontent" placeholder="搜索" />
           </div>
           <div class="audiosearch" @click="refreshpage()">
             <span class="iconfont">&#xe7bf;</span>
@@ -53,31 +57,65 @@
 </template>
 
 <script>
+import {indexApi} from '@/api/request'
 export default {
   name: "headerNav",
-  data(){
+  data() {
     return {
-      iahideback:true
-    }
+      routehistory: [],
+      isback: false,
+      isforward:false,
+      currentindex: 0,
+      searchcontent:''
+    };
   },
-  watch:{
-    canback(){
-      this.ishideback = !this.$store.state.canback
-    }
-  },
-  computed:{
-    canback(){
-      return this.$store.state.canback
-    }
+  watch: {
+    $route() {
+      if (this.isback === true) {
+        this.currentindex--;
+        this.isback = false;
+        return;
+      }
+      if (this.isforward === true) {
+        this.currentindex++;
+        this.isforward = false;
+        return;
+      }
+      if (this.currentindex != this.routehistory.length) {
+        this.routehistory.splice(this.currentindex);
+        this.currentindex = this.routehistory.length;
+        console.log(this.currentindex,this.routehistory);
+      }
+      this.routehistory.push(this.$route.name);
+      this.currentindex++;
+      console.log(this.currentindex,this.routehistory);
+    },
   },
   methods: {
+    canback() {
+      if (this.currentindex === 0) {
+        return;
+      }
+      this.isback = true;
+      this.$router.back();
+    },
+    forward() {
+      if (this.currentindex == this.routehistory.length) {
+        return;
+      }
+      this.isforward = true;
+      this.$router.go(1)
+    },
+    search(){
+      indexApi.search({
+        keywords:this.searchcontent,
+        type:1018
+      }).then(res => {
+        console.log(res);
+      })
+    },
     refreshpage() {
       location.reload();
-    },
-    back() {
-      if(this.is)
-      
-      this.$router.back();
     },
   },
 };
@@ -161,6 +199,7 @@ export default {
           font-size: 18px;
           line-height: 30px;
           margin-left: 10px;
+          cursor: pointer;
         }
         input {
           width: 100%;

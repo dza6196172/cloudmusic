@@ -33,22 +33,22 @@ export default {
         {
           name: "主播电台",
           isactive: false,
-          link: "recommend",
+          link: "radio",
         },
         {
           name: "排行榜",
           isactive: false,
-          link: "recommend",
+          link: "ranklist",
         },
         {
           name: "歌手",
           isactive: false,
-          link: "recommend",
+          link: "artistlist",
         },
         {
           name: "最新音乐",
           isactive: false,
-          link: "recommend",
+          link: "newsong",
         },
       ],
     };

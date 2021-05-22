@@ -1,160 +1,83 @@
 <template>
-  <div>
-    <table>
-      <tr>
-        <th>序号</th>
-        <th @click="sortbyname(nameval)">姓名</th>
-        <th @click="sortbyage(val)">年龄</th>
-        <th @click="sortbygrade(val)">分数</th>
-        <th>日期</th>
-      </tr>
-      <tr v-for="(item, index) in infolist" :key="index">
-        <td>
-          {{ index + 1 }}
-        </td>
-        <td>
-          {{ item.name }}
-        </td>
-        <td>
-          {{ item.age }}
-        </td>
-        <td>
-          {{ item.grade }}
-        </td>
-        <td>
-          {{ item.date }}
-        </td>
-      </tr>
-    </table>
-  </div>
+    <div class="big-box">
+        <div class="icon-box">
+            <div class="icon"></div>
+        </div>
+        <div>
+            <div class="info-box">
+                <span>嗨，你好！我是西智，开始咨询前请先回答几个问题哦</span>
+            </div>
+            <div class="info-box">
+                <span>请问您家宝宝的性别是？</span>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
 export default {
-  name: "songlist",
-  data() {
-    return {
-      val: 0,
-      nameval: 0,
-      currenti:0,
-      infolist: [
-        {
-          name: "alaska",
-          age: "29",
-          grade: "98",
-          date: "2020-09-13",
-        },
-        {
-          name: "alian",
-          age: "25",
-          grade: "78",
-          date: "2021-01-13",
-        },
-        {
-          name: "zest",
-          age: "31",
-          grade: "89",
-          date: "2019-06-13",
-        },
-        {
-          name: "blast",
-          age: "30",
-          grade: "77",
-          date: "2020-09-22",
-        },
-        {
-          name: "blank",
-          age: "28",
-          grade: "78",
-          date: "2019-09-21",
-        },
-        {
-          name: "scrott",
-          age: "29",
-          grade: "96",
-          date: "2020-04-15",
-        },
-        {
-          name: "kelen",
-          age: "23",
-          grade: "69",
-          date: "2021-02-23",
-        },
-        {
-          name: "scallet",
-          age: "23",
-          grade: "97",
-          date: "2020-09-13",
-        },
-      ],
-    };
-  },
-  methods: {
-    sortbyname(nameval) {
-      if (nameval == 0) {
-        this.infolist.sort((a, b) => {
-          let aArr 
-          let bArr
-          if(a.name.length < b.name.length){
-            aArr = a.name.split('')
-            bArr = b.name.split('')
-            for(let i = 0;i<=aArr.length;i++){
-              console.log(aArr[i],bArr[i]);
-              if(aArr[i].charCodeAt(0)<bArr[i].charCodeAt(0)){
-                this.currenti = i
-                break
-              }
-            }
-            console.log(this.currenti);
-            return a.name.charCodeAt(this.currenti) - b.name.charCodeAt(this.currenti);
-          }else{
-            aArr = b.name.split('')
-            bArr = a.name.split('')
-            for(let i = 0;i<=aArr.length;i++){
-              if(aArr[i].charCodeAt(0)<bArr[i].charCodeAt(0)){
-                this.currenti = i
-                break
-              }
-            }
-            return a.name.charCodeAt(this.currenti) - b.name.charCodeAt(this.currenti);
-            
-          }
-          
-        });
-        this.nameval = 1
-      }else{
-        this.infolist.reverse()
-      }
+    name: 'CustomerService',
+    // 组件传值
+    props: {},
+    // 注册组件
+    components: {},
+    // 数据
+    data() {
+        return {};
     },
-    sortbyage(val) {
-      if (val == 0) {
-        this.val = 1;
-        this.infolist.sort((a, b) => {
-          return a.age - b.age;
-        });
-      } else {
-        this.val = 0;
-        this.infolist.sort((a, b) => {
-          return b.age - a.age;
-        });
-      }
-    },
-    sortbygrade(val) {
-      if (val == 0) {
-        this.val = 1;
-        this.infolist.sort((a, b) => {
-          return a.grade - b.grade;
-        });
-      } else {
-        this.val = 0;
-        this.infolist.sort((a, b) => {
-          return b.grade - a.grade;
-        });
-      }
-    },
-  },
+    // 计算属性
+    computed: {},
+    // 监听
+    watch: {},
+    // 创建完成
+    created() {},
+    // 挂载完成
+    mounted() {},
+    // 方法
+    methods: {},
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
+.big-box {
+    width: 375px;
+    height: 724px;
+    background: #f5f5f5;
+    padding: 0 8px;
+    box-sizing: border-box;
+}
+.icon-box {
+    width: 45px;
+    height: 45px;
+    background: red;
+    border-radius: 30px;
+    margin: 0 auto;
+    margin-top: 20px;
+    .icon {
+        z-index: 7;
+        width: 26px;
+        height: 38px;
+        background: url(https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngdab02f239c15fe5736647afa7cc7b89c0a145d9f2865b3865a87ebdf8a2f52b1)
+            0px 0px no-repeat;
+        background-size: 100% 100%;
+        margin: 0 auto;
+        line-height: 38px;
+    }
+}
+.info-box {
+    width: fit-content;
+    padding: 0 15px;
+    box-sizing: border-box;
+    max-width: 240px;
+    margin-top: 16px;
+    height: 64px;
+    font-size: 14px;
+    background: #ffffff;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+}
+.info-box:first-child {
+    margin-top: 28px;
+}
 </style>
