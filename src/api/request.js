@@ -65,4 +65,18 @@ export const indexApi = {
       params,
     });
   },
+  searchsuggest:async function(params) {
+    return axios({
+      url: URL.searchsuggest,
+      method: "get",
+      params,
+    });
+  },
+  searchhot:async function(params) {
+    return axios({
+      url: URL.searchhot,
+      method: "get",
+      params,
+    });
+  },
 }

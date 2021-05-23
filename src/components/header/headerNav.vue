@@ -15,13 +15,17 @@
               >
             </div>
             <div class="go" @click="forward()">
-              <span class="iconfont" :style="{ opacity: (currentindex == routehistory.length) ? '.2' : '.8' }">&#xe743;</span>
+              <span
+                class="iconfont"
+                :style="{
+                  opacity: currentindex == routehistory.length ? '.2' : '.8',
+                }"
+                >&#xe743;</span
+              >
             </div>
           </div>
-          <div class="searchbar">
-            <span class="iconfont" @click="search()">&#xe7b3;</span>
-            <input type="text" v-model="searchcontent" placeholder="搜索" />
-          </div>
+          <search-pop></search-pop>
+
           <div class="audiosearch" @click="refreshpage()">
             <span class="iconfont">&#xe7bf;</span>
           </div>
@@ -33,7 +37,7 @@
             <img src="@/assets/img/defaulthead.jpg" alt="" />
           </div>
           <div class="username">
-            <span class="userleft"
+            <span class="userleft" @click="login()"
               >未登录<span class="iconfont">&#xe7b2;</span></span
             >
             <span class="userright">开通VIP</span>
@@ -57,17 +61,21 @@
 </template>
 
 <script>
-import {indexApi} from '@/api/request'
+import { indexApi } from "@/api/request";
+const { ipcRenderer } = window.require("electron");
+import searchPop from "@/components/header/searchPop";
 export default {
   name: "headerNav",
   data() {
     return {
       routehistory: [],
       isback: false,
-      isforward:false,
+      isforward: false,
       currentindex: 0,
-      searchcontent:''
     };
+  },
+  components: {
+    searchPop,
   },
   watch: {
     $route() {
@@ -84,11 +92,11 @@ export default {
       if (this.currentindex != this.routehistory.length) {
         this.routehistory.splice(this.currentindex);
         this.currentindex = this.routehistory.length;
-        console.log(this.currentindex,this.routehistory);
+        console.log(this.currentindex, this.routehistory);
       }
       this.routehistory.push(this.$route.name);
       this.currentindex++;
-      console.log(this.currentindex,this.routehistory);
+      console.log(this.currentindex, this.routehistory);
     },
   },
   methods: {
@@ -104,19 +112,14 @@ export default {
         return;
       }
       this.isforward = true;
-      this.$router.go(1)
-    },
-    search(){
-      indexApi.search({
-        keywords:this.searchcontent,
-        type:1018
-      }).then(res => {
-        console.log(res);
-      })
+      this.$router.go(1);
     },
     refreshpage() {
       location.reload();
     },
+    login(){
+      ipcRenderer.send("login");
+    }
   },
 };
 </script>
@@ -135,6 +138,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  z-index: 99;
   .left {
     width: 480px;
     justify-content: space-between;
@@ -186,35 +190,7 @@ export default {
           cursor: pointer;
         }
       }
-      .searchbar {
-        -webkit-app-region: no-drag;
-        width: 160px;
-        height: 30px;
-        margin-left: 10px;
-        background-color: #e13e3e;
-        border-radius: 15px;
-        display: flex;
-        .iconfont {
-          color: #f9d8d8;
-          font-size: 18px;
-          line-height: 30px;
-          margin-left: 10px;
-          cursor: pointer;
-        }
-        input {
-          width: 100%;
-          height: 100%;
-          line-height: 30px;
-          margin-left: 5px;
-          color: white;
-          font-size: 12px;
-        }
-        ::-webkit-input-placeholder {
-          color: #e66262;
-          line-height: 30px;
-          font-size: 12px;
-        }
-      }
+
       .audiosearch {
         -webkit-app-region: no-drag;
         width: 30px;

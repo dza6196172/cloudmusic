@@ -57,6 +57,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/css/common.scss";
 .content {
   height: calc(100vh - 190px);
   overflow: auto;

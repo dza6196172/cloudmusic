@@ -7,5 +7,7 @@ export default URL = {
   djprogram:'/personalized/djprogram', //主播电台
   musicurl:'/song/url',//歌曲url
   musicinfo:'/song/detail',//歌曲信息
-  search:'/search' //搜索
+  search:'/search', //搜索
+  searchsuggest:'/search/suggest', //搜索建议
+  searchhot:'/search/hot/detail', //热搜榜
 }

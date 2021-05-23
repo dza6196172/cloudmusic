@@ -1,18 +1,45 @@
 'use strict'
 
-import { app, protocol, BrowserWindow,Menu } from 'electron'
+import { app, protocol, BrowserWindow,shell,Menu } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
 const isDevelopment = process.env.NODE_ENV !== 'production'
+const { ipcMain } = require("electron");
+const Store = require('electron-store');
+const store = new Store();
+let win;
+let loginwin;
 
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
   { scheme: 'app', privileges: { secure: true, standard: true } }
 ])
 
+async function createLoginWindow() {
+  // Create the browser window.
+  loginwin = new BrowserWindow({
+    width: 350,
+    height: 530,
+    frame: false,
+    webPreferences: {
+      nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION,
+      contextIsolation: !process.env.ELECTRON_NODE_INTEGRATION
+    }
+  })
+
+  if (process.env.WEBPACK_DEV_SERVER_URL) {
+    // Load the url of the dev server if in development mode
+    await loginwin.loadURL(process.env.WEBPACK_DEV_SERVER_URL+'#/login')
+  } else {
+    createProtocol('app')
+    // Load the index.html when not in development
+    loginwin.loadURL('app://./index.html'+'#/login')
+  }
+}
+
 async function createWindow() {
   // Create the browser window.
-  const win = new BrowserWindow({
+  win = new BrowserWindow({
     width: 1000,
     height: 670,
     frame: false,
@@ -93,3 +120,17 @@ if (isDevelopment) {
     })
   }
 }
+
+ipcMain.on('login', (e, param) => {
+  createLoginWindow()
+})
+
+ipcMain.on('outurl', (e, url) => {
+    shell.openExternal(url);
+});
+
+ipcMain.on('closelogin' ,() => {
+  loginwin.close()
+});
+
+ 

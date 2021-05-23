@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import HeaderNav from '@/components/headerNav.vue'
+import HeaderNav from '@/components/header/headerNav.vue'
 import sideNav from '@/components/sideNav.vue'
 import bottomPlayer from '@/components/bottomPlayer.vue'
 export default {
@@ -24,6 +24,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/css/common.scss";
   .maincontent{
     display: flex;
     height: calc(100vh - 130px);
