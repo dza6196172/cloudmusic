@@ -10,4 +10,10 @@ export default URL = {
   search:'/search', //搜索
   searchsuggest:'/search/suggest', //搜索建议
   searchhot:'/search/hot/detail', //热搜榜
+
+  // 登录相关接口
+  qrcodekey:'/login/qr/key', //生成二维码key
+  qrcode:'/login/qr/create', //生成二维码
+  qrcodelogin:'/login/qr/check', //检测二维码扫描状态接口
+  userdetail:'/user/account' //获取用户详情
 }

@@ -133,6 +133,7 @@ export default {
     this.getnewsonglist();
     this.getrecommendmvlist();
     this.getdjprogramlist();
+    console.log(this.$storage.get('token'));
   },
   methods: {
     getbannerlist() {

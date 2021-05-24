@@ -30,6 +30,7 @@ async function createLoginWindow() {
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
     await loginwin.loadURL(process.env.WEBPACK_DEV_SERVER_URL+'#/login')
+    // loginwin.webContents.openDevTools({mode:'right'})
   } else {
     createProtocol('app')
     // Load the index.html when not in development
@@ -132,5 +133,9 @@ ipcMain.on('outurl', (e, url) => {
 ipcMain.on('closelogin' ,() => {
   loginwin.close()
 });
+
+ipcMain.on('loginsuccess',() => {
+  win.webContents.send('loginsuccess')
+})
 
  

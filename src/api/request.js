@@ -79,4 +79,35 @@ export const indexApi = {
       params,
     });
   },
+
+
+  //登录接口
+  qrcodekey:async function(params) {
+    return axios({
+      url: URL.qrcodekey,
+      method: "post",
+      params,
+    });
+  },
+  qrcode:async function(params) {
+    return axios({
+      url: URL.qrcode,
+      method: "post",
+      params,
+    });
+  },
+  qrcodelogin:async function(params) {
+    return axios({
+      url: URL.qrcodelogin,
+      method: "post",
+      params,
+    });
+  },
+  userdetail:async function(params) {
+    return axios({
+      url: URL.userdetail,
+      method: "post",
+      params,
+    });
+  },
 }

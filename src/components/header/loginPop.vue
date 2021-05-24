@@ -1,19 +1,12 @@
 <template>
   <div class="userinfo">
-    <div class="avatar">
-      <img src="@/assets/img/defaulthead.jpg" alt="" />
-    </div>
-    <div class="username">
-      <span class="userleft" @click="login()">未登录<span class="iconfont">&#xe7b2;</span></span>
-      <span class="userright">开通VIP</span>
-    </div>
     <div class="loginpop">
       <div class="loginheader">
         <span class="iconfont" @click="closelogin()">&#xe747;</span>
       </div>
       <div class="content">
-        <div class="title">扫码登录</div>
-        <div class="qrcode"><img src="@/assets/img/qrcode.png" alt=""></div>
+        <div class="title" @click="test()">扫码登录</div>
+        <div class="qrcode"><div id="qrCode" ref="qrcodeRef"></div></div>
         <div class="note">使用<span class="musiciapp" @click="downloadapp()">网易云音乐APP</span>扫码登录</div>
       </div>
     </div>
@@ -22,9 +15,23 @@
 
 <script>
 const { ipcRenderer } = window.require("electron");
+import { indexApi } from "@/api/request";
+import QRCode from 'qrcodejs2';
 export default {
   name: "login-pop",
+  data() {
+    return {
+      qrcodetimer:null,
+      qrcodekey:'',
+    }
+  },
+  created() {
+    this.getqrcodekey()
+  },
   methods: {
+    test(){
+      location.reload()
+    },
     login(){
 
     },
@@ -33,6 +40,43 @@ export default {
     },
     closelogin(){
       ipcRenderer.send('closelogin')
+    },
+    getqrcodekey(){
+      indexApi.qrcodekey({}).then(res => {
+        if(res.code == 200){
+          this.qrcodekey = res.data.unikey
+          this.getqrcode()
+        }
+      })
+    },
+    getqrcode(){
+      indexApi.qrcode({
+        key:this.qrcodekey,
+      }).then(res => {
+        if(res.code == 200){
+          new QRCode(this.$refs.qrcodeRef,{
+            text:res.data.qrurl,
+            width:170,
+            height:170
+          })
+          this.qrcodetimer = setInterval(() => {
+            this.isqrcodelogin()
+          }, 2000);
+        }
+      })
+    },
+    isqrcodelogin(){
+      indexApi.qrcodelogin({
+        key:this.qrcodekey,
+        timestamp:Date.parse(new Date())
+      }).then(res => {
+        if(res.code == 803){
+          clearInterval(this.qrcodetimer)
+          this.$storage.set('token',res.cookie)
+          ipcRenderer.send('loginsuccess')
+          this.closelogin()
+        }
+      })
     }
   },
 };
@@ -79,7 +123,7 @@ export default {
       position: absolute;
       width: 100%;
       height: 100%;
-      // -webkit-app-region: drag;
+      -webkit-app-region: drag;
       .iconfont{
         position: absolute;
         right: 6px;

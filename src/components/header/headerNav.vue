@@ -34,11 +34,11 @@
       <div class="right">
         <div class="userinfo">
           <div class="avatar">
-            <img src="@/assets/img/defaulthead.jpg" alt="" />
+            <img :src="userinfo!=null?userinfo.avatarUrl:require('@/assets/img/defaulthead.jpg')" alt="" />
           </div>
           <div class="username">
             <span class="userleft" @click="login()"
-              >未登录<span class="iconfont">&#xe7b2;</span></span
+              >{{userinfo!=null?userinfo.nickname:'未登录'}}<span class="iconfont">&#xe7b2;</span></span
             >
             <span class="userright">开通VIP</span>
           </div>
@@ -72,10 +72,26 @@ export default {
       isback: false,
       isforward: false,
       currentindex: 0,
+      userinfo:null
     };
   },
   components: {
     searchPop,
+  },
+  created() {
+    // this.getuserinfo()
+    // this.$storage.delete('userinfo')
+    // this.$storage.delete('token')
+    if(this.$storage.get('userinfo') != undefined){
+      this.userinfo = this.$storage.get('userinfo')
+    }
+    console.log(this.userinfo);
+  },
+  mounted() {
+    ipcRenderer.on("loginsuccess", (event, parma) => {
+      // parma == "/" && this.$route.path != "/" && this.$router.push("/");
+      this.getuserinfo()
+    });
   },
   watch: {
     $route() {
@@ -119,6 +135,14 @@ export default {
     },
     login(){
       ipcRenderer.send("login");
+    },
+    getuserinfo(){
+      indexApi.userdetail({
+        cookie:this.$storage.get('token')
+      }).then(res => {
+        this.$storage.set('userinfo',res.profile)
+        location.reload()
+      })
     }
   },
 };
