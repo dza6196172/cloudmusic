@@ -136,7 +136,7 @@ export default {
     position: absolute;
     top: 45px;
     border-radius: 5px;
-    box-shadow: 0px 0px 5px #a3a3a3;
+    box-shadow: $shadow;
     padding-top: 20px;
     .title {
       font-size: 13px;

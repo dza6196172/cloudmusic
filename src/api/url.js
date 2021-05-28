@@ -15,5 +15,6 @@ export default URL = {
   qrcodekey:'/login/qr/key', //生成二维码key
   qrcode:'/login/qr/create', //生成二维码
   qrcodelogin:'/login/qr/check', //检测二维码扫描状态接口
-  userdetail:'/user/account' //获取用户详情
+  userdetail:'/user/detail', //获取用户详情
+  useraccount:'/user/account' //获取账号信息
 }

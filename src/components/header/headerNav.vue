@@ -34,14 +34,31 @@
       <div class="right">
         <div class="userinfo">
           <div class="avatar">
-            <img :src="userinfo!=null?userinfo.avatarUrl:require('@/assets/img/defaulthead.jpg')" alt="" />
+            <img
+              :src="
+                useraccount != null
+                  ? useraccount.avatarUrl
+                  : require('@/assets/img/defaulthead.jpg')
+              "
+              alt=""
+            />
           </div>
           <div class="username">
-            <span class="userleft" @click="login()"
-              >{{userinfo!=null?userinfo.nickname:'未登录'}}<span class="iconfont">&#xe7b2;</span></span
+            <span class="userleft" v-if="useraccount != null"
+              >{{ useraccount.nickname
+              }}<span class="iconfont">&#xe7b2;</span></span
             >
-            <span class="userright">开通VIP</span>
+            <span class="userleft" @click="login()"  v-else
+              >未登录<span class="iconfont">&#xe7b2;</span></span
+            >
+            <span class="userright" v-if="useraccount.vipType == 0"
+              >开通VIP</span
+            >
+            <span class="userright" v-else
+              ><img src="@/assets/img/vipicon.png" alt="" class="vipicon"
+            /></span>
           </div>
+          <user-pop></user-pop>
         </div>
         <div class="lefttool">
           <span class="iconfont">&#xe748;</span>
@@ -64,6 +81,7 @@
 import { indexApi } from "@/api/request";
 const { ipcRenderer } = window.require("electron");
 import searchPop from "@/components/header/searchPop";
+import userPop from "@/components/header/userPop";
 export default {
   name: "headerNav",
   data() {
@@ -72,25 +90,27 @@ export default {
       isback: false,
       isforward: false,
       currentindex: 0,
-      userinfo:null
+      useraccount: null,
+      userdetail: null,
     };
   },
   components: {
     searchPop,
+    userPop
   },
   created() {
-    // this.getuserinfo()
-    // this.$storage.delete('userinfo')
+    // this.getuseraccount()
+    // this.$storage.delete('useraccount')
     // this.$storage.delete('token')
-    if(this.$storage.get('userinfo') != undefined){
-      this.userinfo = this.$storage.get('userinfo')
+    if (this.$storage.get("useraccount") != undefined) {
+      this.useraccount = this.$storage.get("useraccount");
+      this.getuserdetail();
     }
-    console.log(this.userinfo);
   },
   mounted() {
     ipcRenderer.on("loginsuccess", (event, parma) => {
       // parma == "/" && this.$route.path != "/" && this.$router.push("/");
-      this.getuserinfo()
+      this.getuseraccount();
     });
   },
   watch: {
@@ -108,11 +128,9 @@ export default {
       if (this.currentindex != this.routehistory.length) {
         this.routehistory.splice(this.currentindex);
         this.currentindex = this.routehistory.length;
-        console.log(this.currentindex, this.routehistory);
       }
       this.routehistory.push(this.$route.name);
       this.currentindex++;
-      console.log(this.currentindex, this.routehistory);
     },
   },
   methods: {
@@ -133,17 +151,29 @@ export default {
     refreshpage() {
       location.reload();
     },
-    login(){
+    login() {
       ipcRenderer.send("login");
     },
-    getuserinfo(){
-      indexApi.userdetail({
-        cookie:this.$storage.get('token')
-      }).then(res => {
-        this.$storage.set('userinfo',res.profile)
-        location.reload()
-      })
-    }
+    getuseraccount() {
+      indexApi
+        .useraccount({
+          cookie: this.$storage.get("token"),
+        })
+        .then((res) => {
+          this.$storage.set("useraccount", res.profile);
+          location.reload();
+        });
+    },
+    getuserdetail() {
+      indexApi
+        .userdetail({
+          uid: this.useraccount.userId,
+        })
+        .then((res) => {
+          this.userdetail = res;
+          this.$storage.set("userdetail", res);
+        });
+    },
   },
 };
 </script>
@@ -260,6 +290,11 @@ export default {
           &:hover {
             color: white;
           }
+        }
+        .vipicon {
+          display: inline-block;
+          vertical-align: middle;
+          width: 35px;
         }
       }
     }

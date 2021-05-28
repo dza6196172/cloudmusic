@@ -6,6 +6,55 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "5201219",
+      "name": "绑定",
+      "font_class": "bangding",
+      "unicode": "e61b",
+      "unicode_decimal": 58907
+    },
+    {
+      "icon_id": "7033854",
+      "name": "购物",
+      "font_class": "gouwu",
+      "unicode": "e697",
+      "unicode_decimal": 59031
+    },
+    {
+      "icon_id": "7575633",
+      "name": "退出",
+      "font_class": "tuichu",
+      "unicode": "e74e",
+      "unicode_decimal": 59214
+    },
+    {
+      "icon_id": "8146576",
+      "name": "签到",
+      "font_class": "edit_blue",
+      "unicode": "e647",
+      "unicode_decimal": 58951
+    },
+    {
+      "icon_id": "9844819",
+      "name": "vip",
+      "font_class": "vip",
+      "unicode": "e62b",
+      "unicode_decimal": 58923
+    },
+    {
+      "icon_id": "11531636",
+      "name": "用户",
+      "font_class": "yonghu",
+      "unicode": "e64d",
+      "unicode_decimal": 58957
+    },
+    {
+      "icon_id": "21042760",
+      "name": "徽章",
+      "font_class": "huizhang",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
       "icon_id": "14472224",
       "name": "play--filled--alt",
       "font_class": "play--filled--alt",

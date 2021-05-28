@@ -110,4 +110,11 @@ export const indexApi = {
       params,
     });
   },
+  useraccount:async function(params) {
+    return axios({
+      url: URL.useraccount,
+      method: "post",
+      params,
+    });
+  },
 }
