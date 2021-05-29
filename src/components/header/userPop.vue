@@ -14,6 +14,15 @@
         <div class="activename">粉丝</div>
       </div>
     </div>
+    <div class="signin">
+      <button><span class="iconfont">&#xe647;</span>签到</button>
+    </div>
+    <div class="celllist">
+      <div class="cellitem">
+        <div class="left"><span class="iconfont">&#xe62b;</span>我的会员</div>
+        <div class="right"><span style="font-size:11px;color:lightgray">1022.10.91到期</span><span class="iconfont" style="color:gray">&#xe743;</span></div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -46,6 +55,35 @@ export default {
       .activename{
         font-size: 12px;
         color: gray;
+      }
+    }
+  }
+  .signin{
+    width: 80px;
+    height: 30px;
+    border-radius: 15px;
+    border: 1px solid #d9d9d9;
+    text-align: center;
+    line-height: 28px;
+    cursor: pointer;
+    margin: 0 auto;
+    .iconfont{
+      padding-right: 5px;
+      font-size: 14px;
+    }
+  }
+  .celllist{
+    .cellitem{
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      padding: 10px 15px;
+      line-height: 30px;
+      .left{
+        .iconfont{
+          margin-right: 6px;
+          font-size: 18px;
+        }
       }
     }
   }
