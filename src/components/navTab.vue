@@ -87,7 +87,7 @@ export default {
         content: "";
         width: 75%;
         height: 3px;
-        background-color: $red;
+        background-color: $topic;
       }
     }
   }

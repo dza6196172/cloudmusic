@@ -9,7 +9,9 @@ export default new Vuex.Store({
     musicid:'',
     musicUrl:'',
     musicinfo:'',
-    canback:false
+    canback:false,
+    userpopShow:false,
+    colorpopShow:false,
   },
   mutations: {
     getmusicurl(state,url){

@@ -36,7 +36,7 @@
           <div class="avatar">
             <img
               :src="
-                useraccount != null
+                useraccount.avatarUrl
                   ? useraccount.avatarUrl
                   : require('@/assets/img/defaulthead.jpg')
               "
@@ -44,24 +44,25 @@
             />
           </div>
           <div class="username">
-            <span class="userleft" v-if="useraccount != null"
+            <span class="userleft" v-if="useraccount.nickname" @click.stop="showUserPop()"
               >{{ useraccount.nickname
               }}<span class="iconfont">&#xe7b2;</span></span
             >
             <span class="userleft" @click="login()"  v-else
               >未登录<span class="iconfont">&#xe7b2;</span></span
             >
-            <span class="userright" v-if="useraccount.vipType == 0"
+            <span class="userright" v-if="!useraccount.vipType||useraccount.vipType == 0"
               >开通VIP</span
             >
             <span class="userright" v-else
               ><img src="@/assets/img/vipicon.png" alt="" class="vipicon"
             /></span>
           </div>
-          <user-pop></user-pop>
+          <user-pop v-if="userpopShow"></user-pop>
         </div>
         <div class="lefttool">
-          <span class="iconfont">&#xe748;</span>
+          <span class="iconfont" @click.stop="showColorPop()">&#xe748;</span>
+          <color-pop v-if="colorpopShow"></color-pop>
           <span class="iconfont">&#xe76c;</span>
           <span class="iconfont">&#xe74f;</span>
         </div>
@@ -82,6 +83,7 @@ import { indexApi } from "@/api/request";
 const { ipcRenderer } = window.require("electron");
 import searchPop from "@/components/header/searchPop";
 import userPop from "@/components/header/userPop";
+import colorPop from "@/components/header/colorPop";
 export default {
   name: "headerNav",
   data() {
@@ -90,13 +92,14 @@ export default {
       isback: false,
       isforward: false,
       currentindex: 0,
-      useraccount: null,
+      useraccount: {},
       userdetail: null,
     };
   },
   components: {
     searchPop,
-    userPop
+    userPop,
+    colorPop
   },
   created() {
     // this.getuseraccount()
@@ -133,7 +136,21 @@ export default {
       this.currentindex++;
     },
   },
+  computed: {
+    userpopShow(){
+      return this.$store.state.userpopShow
+    },
+    colorpopShow(){
+      return this.$store.state.colorpopShow
+    }
+  },
   methods: {
+    showUserPop(){
+      this.$store.state.userpopShow = true
+    },
+    showColorPop(){
+      this.$store.state.colorpopShow = true
+    },
     canback() {
       if (this.currentindex === 0) {
         return;
@@ -186,7 +203,7 @@ export default {
   top: 0;
   width: 100%;
   height: 60px;
-  background-color: $red;
+  background-color: $topic;
   -webkit-app-region: drag;
   padding: 0 20px;
   display: flex;
@@ -214,7 +231,7 @@ export default {
       align-items: center;
       .goback {
         width: 60px;
-        color: #f9d8d8;
+        color: rgba($color: #ffffff, $alpha: 0.8);
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -249,8 +266,8 @@ export default {
         -webkit-app-region: no-drag;
         width: 30px;
         height: 30px;
-        background-color: #e13e3e;
-        color: #f9d8d8;
+        background-color: rgba($color: #000000, $alpha: .1);
+        color: rgba($color: #ffffff, $alpha: 0.5);
         text-align: center;
         line-height: 30px;
         border-radius: 50%;
@@ -266,6 +283,7 @@ export default {
     display: flex;
     align-items: center;
     .userinfo {
+      position: relative;
       display: flex;
       .avatar {
         -webkit-app-region: no-drag;
@@ -300,6 +318,7 @@ export default {
     }
     .lefttool {
       align-items: center;
+      position: relative;
       box-sizing: content-box;
       padding-right: 5px;
       height: 16px;

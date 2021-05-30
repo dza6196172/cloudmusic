@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home" @click="hidePop()">
     <header-nav></header-nav>
     <div class="maincontent">
       <div class="left"><side-nav></side-nav></div>
@@ -19,7 +19,21 @@ export default {
     HeaderNav,
     sideNav,
     bottomPlayer
-  }
+  },
+  computed: {
+    userpopShow(){
+      return this.$store.state.userpopShow
+    },
+    colorpopShow(){
+      return this.$store.state.colorpopShow
+    }
+  },
+  methods: {
+    hidePop(){
+      this.$store.state.userpopShow = false
+      this.$store.state.colorpopShow = false
+    }
+  },
 }
 </script>
 

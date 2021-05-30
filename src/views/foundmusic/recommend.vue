@@ -203,7 +203,7 @@ export default {
   ::v-deep .el-carousel__indicators--outside {
     .is-active {
       button {
-        background-color: $red;
+        background-color: $topic;
       }
     }
     button {
@@ -323,7 +323,7 @@ export default {
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
-            color: $red;
+            color: $topic;
             width: 25px;
             height: 25px;
             background-color: rgba($color: white, $alpha: 0.8);

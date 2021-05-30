@@ -208,7 +208,7 @@ export default {
         .redline {
           position: absolute;
           height: 3px;
-          background-color: $red;
+          background-color: $topic;
         }
       }
     }

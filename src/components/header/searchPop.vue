@@ -105,11 +105,11 @@ export default {
   width: 160px;
   height: 30px;
   margin-left: 10px;
-  background-color: #e13e3e;
+  background-color: rgba($color: #000000, $alpha: .1);
   border-radius: 15px;
   display: flex;
   .iconfont {
-    color: #f9d8d8;
+    color: rgba($color: white, $alpha: .5);
     font-size: 18px;
     line-height: 30px;
     margin-left: 10px;
@@ -124,7 +124,7 @@ export default {
     font-size: 12px;
   }
   ::-webkit-input-placeholder {
-    color: #e66262;
+    color: rgba($color: white, $alpha: .2);
     line-height: 30px;
     font-size: 12px;
   }
