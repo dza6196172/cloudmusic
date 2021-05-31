@@ -112,7 +112,6 @@ export default {
   },
   mounted() {
     ipcRenderer.on("loginsuccess", (event, parma) => {
-      // parma == "/" && this.$route.path != "/" && this.$router.push("/");
       this.getuseraccount();
     });
   },

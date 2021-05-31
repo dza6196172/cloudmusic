@@ -8,7 +8,7 @@ import { indexApi } from "@/api/request";
 export default {
   created() {
     this.getuseraccount();
-    document.documentElement.style.setProperty('--topic','skyblue')
+    document.documentElement.style.setProperty('--topic',this.$storage.get('topic'))
   },
   methods: {
     getuseraccount() {

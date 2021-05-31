@@ -1,14 +1,15 @@
 <template>
-  <div class="songlist">
-      aaa
+  <div>
+    bbb
   </div>
 </template>
 
 <script>
 export default {
-  name: "songlist",
-};
+  name: "radio",
+}
 </script>
 
 <style lang="scss" scoped>
+
 </style>

@@ -41,6 +41,14 @@ const routes = [
               keepalive:true
             }
           },
+          {
+            path: '/radio',
+            name: 'radio',
+            component: () => import('@/views/foundmusic/radio.vue'),
+            meta:{
+              keepalive:true
+            }
+          },
         ]
       }
     ]
