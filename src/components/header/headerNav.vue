@@ -63,7 +63,7 @@
         <div class="lefttool">
           <span class="iconfont" @click.stop="showColorPop()">&#xe748;</span>
           <color-pop v-if="colorpopShow"></color-pop>
-          <span class="iconfont">&#xe76c;</span>
+          <span class="iconfont" @click="$router.push('/setting')">&#xe76c;</span>
           <span class="iconfont">&#xe74f;</span>
         </div>
         <div class="righttool">

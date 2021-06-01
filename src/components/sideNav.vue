@@ -1,7 +1,7 @@
 <template>
   <div class="sidenav">
     <ul>
-      <li>发现音乐</li>
+      <li @click="$router.push('/recommend')" :class="{activeroute:$route.name == 'recommend'}">发现音乐</li>
       <li>视频</li>
       <li>朋友</li>
       <li>直播</li>
@@ -29,23 +29,6 @@ export default {
 .sidenav {
   padding: 10px 2px 0 10px;
   width: 220px;
-  // ::-webkit-scrollbar {
-  //   display: block!important;
-  //   width: 10px;
-  //   height: 1px;
-  // }
-  // ::-webkit-scrollbar-thumb {
-  //   /*滚动条里面小方块*/
-  //   border-radius: 10px;
-  //   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-  //   background: #535353;
-  // }
-  // ::-webkit-scrollbar-track {
-  //   /*滚动条里面轨道*/
-  //   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-  //   border-radius: 10px;
-  //   background: #ededed;
-  // }
   ul {
     li {
       padding: 8px 10px;
@@ -59,6 +42,11 @@ export default {
       .iconfont {
         margin-right: 10px;
       }
+    }
+    .activeroute{
+      background-color: #f6f6f7;
+      font-weight: 700;
+      font-size: 16px;
     }
   }
   .navtitle {

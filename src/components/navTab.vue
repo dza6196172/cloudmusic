@@ -3,7 +3,7 @@
     <div class="navtab">
       <ul>
         <li
-          :class="{ active: item.isactive == true }"
+          :class="{ active: (item.isactive == true)&&!forbid,forbid:forbid }"
           v-for="(item, index) in navlist"
           :key="index"
           @click="changeactive(item)"
@@ -26,6 +26,17 @@ export default {
         return [];
       },
     },
+    // {
+    //   name: "个性推荐",
+    //   isactive: true,
+    //   link: "recommend",
+    // },
+    forbid:{
+      type:Boolean,
+      default(){
+        return false;
+      }
+    }
   },
   created(){
     this.isactive()
@@ -89,6 +100,12 @@ export default {
         height: 3px;
         background-color: $topic;
       }
+    }
+    .forbid{
+      pointer-events: none;
+      font-size: 20px;
+      font-weight: 700;
+      position: relative;
     }
   }
 }

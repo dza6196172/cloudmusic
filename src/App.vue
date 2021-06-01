@@ -8,6 +8,9 @@ import { indexApi } from "@/api/request";
 export default {
   created() {
     this.getuseraccount();
+    if(!this.$storage.get('topic')){
+      this.$storage.set("topic", "#ec4141");
+    }
     document.documentElement.style.setProperty('--topic',this.$storage.get('topic'))
   },
   methods: {

@@ -8,7 +8,12 @@
         :style="{ 'background-color': item.color }"
         @click="changecolor(item)"
       >
-        <div class="ischosen" v-if="item.color == currentcolor&&iscustomize==false">✔</div>
+        <div
+          class="ischosen"
+          v-if="item.color == currentcolor && iscustomize == false"
+        >
+          ✔
+        </div>
       </div>
     </div>
     <div class="colorbar">
@@ -18,10 +23,24 @@
       </div>
       <div class="colorchoose">
         <div class="hue">
-          <vue-slider v-model="colorvalue" :max="360"></vue-slider>
+          <vue-slider
+            v-model="colorvalue"
+            tooltip="none"
+            @drag-end="ensurechange()"
+            @dragging="modifycolor()"
+            :dotStyle="{ width: '10px', height: '10px' }"
+            :max="360"
+          ></vue-slider>
         </div>
         <div class="lightness">
-          <vue-slider v-model="brightvalue" :max="50"></vue-slider>
+          <vue-slider
+            v-model="brightvalue"
+            tooltip="none"
+            @drag-end="ensurechange()"
+            @dragging="modifycolor()"
+            :dotStyle="{ width: '10px', height: '10px' }"
+            :max="50"
+          ></vue-slider>
         </div>
       </div>
     </div>
@@ -29,19 +48,19 @@
 </template>
 
 <script>
-import VueSlider from 'vue-slider-component'
-import 'vue-slider-component/theme/default.css'
+import VueSlider from "vue-slider-component";
+import "vue-slider-component/theme/default.css";
 export default {
   name: "color-pop",
-  components:{
-    VueSlider
+  components: {
+    VueSlider,
   },
   data() {
     return {
       colorvalue: 0,
       brightvalue: 0,
       currentcolor: "",
-      iscustomize:false,
+      iscustomize: false,
       colorlist: [
         {
           colorname: "white",
@@ -97,13 +116,17 @@ export default {
   created() {
     if (this.$storage.get("topic")) {
       this.currentcolor = this.$storage.get("topic");
-      if(this.currentcolor.substr(0,3) == 'hsl'){
-        this.iscustomize = true
-        let colorarr = []
-        colorarr = this.currentcolor.split(',')
-        this.colorvalue = parseInt(colorarr[0].substr(4,3))
-        this.brightvalue = parseInt(colorarr[2].substr(0,2))
-        console.log(this.colorvalue,this.brightvalue);
+      if (this.currentcolor.substr(0, 3) == "hsl") {
+        this.iscustomize = true;
+        let colorarr = [];
+        colorarr = this.currentcolor.split(",");
+        this.colorvalue = parseInt(colorarr[0].substr(4, 3));
+        this.brightvalue = parseInt(colorarr[2].substr(0, 2));
+        document.documentElement.style.setProperty("--lightnessColor", this.colorvalue);
+      } else {
+        this.colorvalue = this.$storage.get("colorvalue");
+        this.brightvalue = this.$storage.get("brightvalue");
+        document.documentElement.style.setProperty("--lightnessColor", this.colorvalue);
       }
     } else {
       this.currentcolor = "#ec4141";
@@ -115,7 +138,7 @@ export default {
       if (this.currentcolor == item.color) {
         return;
       } else {
-        this.iscustomize = false
+        this.iscustomize = false;
         this.currentcolor = item.color;
         this.$storage.set("topic", item.color);
         document.documentElement.style.setProperty("--topic", item.color);
@@ -124,13 +147,16 @@ export default {
     modifycolor() {
       this.currentcolor = `hsl(${this.colorvalue},100%,${this.brightvalue}%)`;
       document.documentElement.style.setProperty("--topic", this.currentcolor);
-      console.log('aaa');
+      document.documentElement.style.setProperty("--lightnessColor", this.colorvalue);
+      console.log("aaa");
     },
-    ensurechange(){
-      this.iscustomize = true
+    ensurechange() {
+      this.iscustomize = true;
       this.$storage.set("topic", this.currentcolor);
-      console.log(this.$storage.get('topic'));
-    }
+      this.$storage.set("colorvalue", this.colorvalue);
+      this.$storage.set("brightvalue", this.brightvalue);
+      console.log(this.$storage.get("topic"));
+    },
   },
 };
 </script>
@@ -140,10 +166,11 @@ export default {
 .colorpop {
   position: absolute;
   width: 330px;
-  height: 270px;
+  height: 180px;
   background-color: white;
   border-radius: 5px;
   top: 38px;
+  box-shadow: $shadow;
   .colorlist {
     width: 100%;
     display: flex;
@@ -176,7 +203,7 @@ export default {
     padding: 0 20px;
     display: flex;
     justify-content: space-between;
-    .customizecolor{
+    .customizecolor {
       position: relative;
       .ischosen {
         width: 16px;
@@ -191,35 +218,43 @@ export default {
         bottom: -6px;
       }
     }
-    .colorchoose{
+    .colorchoose {
       width: 240px;
       display: flex;
       flex-direction: column;
       justify-content: space-around;
+      .hue {
+        ::v-deep .vue-slider-rail {
+          margin: 0;
+          height: 4px;
+          background-image: linear-gradient(
+            to right,
+            hsl(0, 100%, 50%),
+            hsl(60, 100%, 50%),
+            hsl(120, 100%, 50%),
+            hsl(180, 100%, 50%),
+            hsl(240, 100%, 50%),
+            hsl(300, 100%, 50%),
+            hsl(360, 100%, 50%)
+          );
+        }
+      }
+      .lightness{
+        ::v-deep .vue-slider-rail {
+          margin: 0;
+          height: 4px;
+          background-image: linear-gradient(
+            to right,
+            hsl(var(--lightnessColor), 100%, 0%),
+            hsl(var(--lightnessColor), 100%, 50%),
+          );
+        }
+      }
     }
-    ::v-deep .vue-slider-rail {
-      margin: 0;
-      height: 4px;
-      background-image: linear-gradient(
-        to right,
-        hsl(0, 100%, 50%),
-        hsl(60, 100%, 50%),
-        hsl(120, 100%, 50%),
-        hsl(180, 100%, 50%),
-        hsl(240, 100%, 50%),
-        hsl(300, 100%, 50%),
-        hsl(360, 100%, 50%)
-      );
-    }
-    ::v-deep .el-slider__button-wrapper{
-      width: 10px;
-      height: 10px;
-      top: -10px;
-    }
-    ::v-deep .el-slider__button{
-      width: 10px;
-      height: 10px;
-      border: 1px solid gray;
+
+    ::v-deep .vue-slider-dot {
+      width: 10px !important;
+      height: 10px !important;
     }
     ::v-deep .vue-slider-process {
       background-color: transparent;
