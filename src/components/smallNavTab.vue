@@ -18,11 +18,10 @@ export default {
       default(){
         return []
       }
-    }
+    },
   },
   methods: {
     jumpto(item){
-      item.isactive = true
       this.$emit('jumpto',item)
     },
   },

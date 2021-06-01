@@ -1,154 +1,178 @@
 <template>
   <div>
     <nav-tab :navlist="navlist" :forbid="true"></nav-tab>
-    <small-nav-tab :snavlist="snavlist" @jumpto="jumpto"></small-nav-tab>
-    <div class="settingcontent">
+    <small-nav-tab
+      :snavlist="snavlist"
+      @jumpto="jumpto"
+      @scrollposition="scrollposition"
+    ></small-nav-tab>
+    <div class="settingcontent" ref="settingcontent">
       <div class="account" ref="account">
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
+        <div class="content">
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+        </div>
       </div>
-      <div class="title" ref="normal">
-        常规
+      <div class="normal" ref="normal">
+        <div class="title">常规</div>
+        <div class="content">
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+        </div>
       </div>
-      <div class="account">
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
+      <div class="play" ref="play">
+        <div class="title">播放</div>
+        <div class="content">
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+        </div>
       </div>
-      <div class="title" ref="play">
-        播放
+      <div class="messege" ref="messege">
+        <div class="title">消息与隐私</div>
+        <div class="content">
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+        </div>
       </div>
-      <div class="account">
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
+      <div class="shortcut" ref="shortcut">
+        <div class="title">快捷键</div>
+        <div class="content">
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+        </div>
       </div>
-      <div class="title" ref="messege">
-        消息与隐私
+      <div class="download" ref="download">
+        <div class="title">下载设置</div>
+        <div class="content">
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+        </div>
       </div>
-      <div class="account">
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
+      <div class="lyric" ref="lyric">
+        <div class="title">歌词</div>
+        <div class="content">
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+        </div>
       </div>
-      <div class="title" ref="shortcut">
-        快捷键
+      <div class="tool" ref="tool">
+        <div class="title">工具</div>
+        <div class="content">
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+        </div>
       </div>
-      <div class="account">
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-      </div>
-      <div class="title" ref="download">
-        下载设置
-      </div>
-      <div class="account">
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-      </div>
-      <div class="title" ref="lyric">
-        歌词
-      </div>
-      <div class="account">
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-      </div>
-      <div class="title" ref="tool">
-        工具
-      </div>
-      <div class="account">
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-      </div>
-      <div class="title" ref="about">
-        关于网易云音乐
-      </div>
-      <div class="account">
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
-        <div>第一</div>
+      <div class="about" ref="about">
+        <div class="title">关于网易云音乐</div>
+        <div class="content">
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+          <div>第一</div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import navTab from '@/components/navTab'
-import smallNavTab from '@/components/smallNavTab'
+import navTab from "@/components/navTab";
+import smallNavTab from "@/components/smallNavTab";
 export default {
   name: "setting",
-  components:{
+  components: {
     navTab,
-    smallNavTab
+    smallNavTab,
   },
   data() {
     return {
-      navlist:[
+      navlist: [
         {
           name: "设置",
           isactive: false,
           link: "setting",
         },
       ],
-      snavlist:[
+      snavlist: [
         {
           name: "帐号",
           isactive: true,
@@ -194,35 +218,67 @@ export default {
           isactive: false,
           link: "about",
         },
-      ]
-    }
+      ],
+    };
   },
   mounted() {
-    
+    this.$refs.settingcontent.addEventListener("scroll", this.handleScroll);
   },
   methods: {
-    jumpto(item){
-      this.$refs[item.link].scrollIntoView()
-    }
+    jumpto(item) {
+      this.$refs[item.link].scrollIntoView({behavior: 'smooth',block:'start'});
+    },
+    scrollposition() {
+      console.log(this.$refs.settingcontent);
+    },
+    handleScroll() {
+      for (let i = 0; i < this.snavlist.length; i++) {
+        if (
+          this.$refs[this.snavlist[i].link].offsetTop - 165 <=
+            this.$refs.settingcontent.scrollTop &&
+          this.$refs.settingcontent.scrollTop <
+            this.$refs[this.snavlist[i].link].offsetTop -
+              165 +
+              this.$refs[this.snavlist[i].link].clientHeight
+        ) {
+          this.snavlist[i].isactive = true;
+        } else {
+          this.snavlist[i].isactive = false;
+        }
+        if (
+          this.$refs.settingcontent.scrollTop +
+            this.$refs.settingcontent.clientHeight ==
+          this.$refs.settingcontent.scrollHeight
+        ) {
+          this.snavlist.forEach((item, index) => {
+            if (index != this.snavlist.length - 1) {
+              item.isactive = false;
+            } else {
+              item.isactive = true;
+            }
+          });
+        }
+      }
+    },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
 @import "@/assets/css/common.scss";
-.settingcontent{
+.settingcontent {
   padding: 0 30px;
   overflow: auto;
   height: calc(100vh - 235px);
-  .title{
+  .title {
     font-size: 15px;
     font-weight: 700;
     padding: 20px 0;
   }
-  .account{
+  .account {
     font-weight: 400;
     padding-bottom: 20px;
-    border-bottom: 1px solid #d3d3d3;
+    border-bottom: 1px solid #e0e0e0;
   }
 }
 </style>

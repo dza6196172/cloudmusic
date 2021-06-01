@@ -148,14 +148,12 @@ export default {
       this.currentcolor = `hsl(${this.colorvalue},100%,${this.brightvalue}%)`;
       document.documentElement.style.setProperty("--topic", this.currentcolor);
       document.documentElement.style.setProperty("--lightnessColor", this.colorvalue);
-      console.log("aaa");
     },
     ensurechange() {
       this.iscustomize = true;
       this.$storage.set("topic", this.currentcolor);
       this.$storage.set("colorvalue", this.colorvalue);
       this.$storage.set("brightvalue", this.brightvalue);
-      console.log(this.$storage.get("topic"));
     },
   },
 };
