@@ -5,21 +5,34 @@
       <span class="readall">一键已读</span>
     </div>
     <div class="messegetab">
-      <div class="tabitem" @click="getmsgprivate()">私信</div>
-      <div class="tabitem">评论</div>
-      <div class="tabitem">@我</div>
-      <div class="tabitem">通知</div>
+      <div :class="{tabitem:true,tabitemactive:currenttab==1}" @click="getmsgprivate()">私信</div>
+      <div :class="{tabitem:true,tabitemactive:currenttab==2}">评论</div>
+      <div :class="{tabitem:true,tabitemactive:currenttab==3}">@我</div>
+      <div :class="{tabitem:true,tabitemactive:currenttab==4}">通知</div>
     </div>
     <div class="messegecontent">
       <div class="msgprivate">
         <div class="havecontent">
-          <div class="privateitem" v-for="(item,index) in privatemsg" :key="index">
-            <div class="avatar"><img :src="item.fromUser.avatarUrl" alt="" width="30px" height="30px"></div>
-            <div class="forminfo">
-              <div class="fromname">{{item.fromUser.nickname}}</div>
-              <div class="fromtime">{{item.lastMsgTime | date}}</div>
+          <div
+            class="privateitem"
+            v-for="(item, index) in privatemsg"
+            :key="index"
+          >
+            <div class="avatar">
+              <img
+                :src="item.fromUser.avatarUrl"
+                alt=""
+                width="30px"
+                height="30px"
+              />
             </div>
-            <div class="msg"></div>
+            <div class="content">
+              <div class="forminfo">
+                <div class="fromname">{{ item.fromUser.nickname }}</div>
+                <div class="fromtime">{{ item.lastMsgTime | date }}</div>
+              </div>
+              <div class="msg">{{ JSON.parse(item.lastMsg).msg }}</div>
+            </div>
           </div>
         </div>
         <!-- <div class="empty">暂无私信内容</div> -->
@@ -34,24 +47,31 @@ export default {
   name: "messege-pop",
   data() {
     return {
-      privatemsg:[]
-    }
+      privatemsg: [],
+      currenttab:1,
+    };
+  },
+  created() {
+    this.getmsgprivate();
   },
   methods: {
-    getmsgprivate(){
-      indexApi.msgprivate({
-        cookie:this.$storage.get('token')
-      }).then(res => {
-        this.privatemsg = res.msgs
-      })
-    }
+    getmsgprivate() {
+      indexApi
+        .msgprivate({
+          cookie: this.$storage.get("token"),
+        })
+        .then((res) => {
+          this.privatemsg = res.msgs;
+          this.currenttab = 1
+        });
+    },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
 @import "@/assets/css/common.scss";
-.messege-pop{
+.messege-pop {
   position: fixed;
   right: 0;
   width: 360px;
@@ -59,20 +79,20 @@ export default {
   background-color: white;
   top: 60px;
   box-shadow: $shadow;
-  .title{
+  .title {
     display: flex;
     justify-content: space-between;
     padding: 15px 30px;
     align-items: baseline;
-    .titletext{
+    .titletext {
       font-size: 18px;
     }
-    .readall{
+    .readall {
       font-size: 16px;
       font-weight: 700;
     }
   }
-  .messegetab{
+  .messegetab {
     width: calc(100% - 60px);
     height: 30px;
     border-radius: 15px;
@@ -80,7 +100,7 @@ export default {
     margin: 0 30px 15px 30px;
     display: flex;
     justify-content: space-between;
-    .tabitem{
+    .tabitem {
       width: 25%;
       height: 28px;
       text-align: center;
@@ -88,26 +108,57 @@ export default {
       font-size: 12px;
       line-height: 28px;
       cursor: default;
-      &:hover{
+      &:hover {
         background-color: #f4f4f5;
       }
     }
+    .tabitemactive{
+      background-color: #bbbbbb;
+      color: white;
+      pointer-events: none;
+    }
   }
-  .messegecontent{
+  .messegecontent {
     padding: 0 30px;
-    .msgprivate{
-      .havecontent{
-        .privateitem{
+    overflow: scroll;
+    height: calc(100vh - 229px);
+    .msgprivate {
+      .havecontent {
+        .privateitem {
           display: flex;
-          ju
-          .avatar{
+          justify-content: space-between;
+          align-items: center;
+          .avatar {
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
             overflow: hidden;
+            cursor: pointer;
           }
-          .forminfo{
-            width: 260px;
-            display: flex;
-            justify-content: space-between;
+          .content {
+            border-bottom: 1px solid #f3f3f3;
+            padding: 10px 0;
+            .forminfo {
+              width: 260px;
+              display: flex;
+              justify-content: space-between;
+              cursor: pointer;
+              .fromname {
+                font-size: 12px;
+                color: #507daf;
+              }
+              .fromtime {
+                font-size: 11px;
+                color: #cccccc;
+                font-weight: 100;
+              }
+            }
+            .msg {
+              width: 260px;
+              font-size: 12px;
+              padding-top: 2px;
+              @include nowrap();
+            }
           }
         }
       }

@@ -64,8 +64,8 @@
           <span class="iconfont" @click.stop="showColorPop()">&#xe748;</span>
           <color-pop v-if="colorpopShow"></color-pop>
           <span class="iconfont" @click="$router.push('/setting')">&#xe76c;</span>
-          <span class="iconfont">&#xe74f;</span>
-          <messege-pop></messege-pop>
+          <span class="iconfont" @click.stop="showMessegePop()">&#xe74f;</span>
+          <messege-pop v-if="messegepopShow"></messege-pop>
         </div>
         <div class="righttool">
           <span class="iconfont">&#xe7d2;</span>
@@ -144,14 +144,26 @@ export default {
     },
     colorpopShow(){
       return this.$store.state.colorpopShow
+    },
+    messegepopShow(){
+      return this.$store.state.messegepopShow
     }
   },
   methods: {
     showUserPop(){
       this.$store.state.userpopShow = true
+      this.$store.state.colorpopShow = false
+      this.$store.state.messegepopShow = false
     },
     showColorPop(){
       this.$store.state.colorpopShow = true
+      this.$store.state.userpopShow = false
+      this.$store.state.messegepopShow = false
+    },
+    showMessegePop(){
+      this.$store.state.messegepopShow = true
+      this.$store.state.userpopShow = false
+      this.$store.state.colorpopShow = false
     },
     canback() {
       if (this.currentindex === 0) {

@@ -20,18 +20,11 @@ export default {
     sideNav,
     bottomPlayer
   },
-  computed: {
-    userpopShow(){
-      return this.$store.state.userpopShow
-    },
-    colorpopShow(){
-      return this.$store.state.colorpopShow
-    }
-  },
   methods: {
     hidePop(){
       this.$store.state.userpopShow = false
       this.$store.state.colorpopShow = false
+      this.$store.state.messegepopShow = false
     }
   },
 }
