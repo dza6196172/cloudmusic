@@ -117,4 +117,34 @@ export const indexApi = {
       params,
     });
   },
+
+  //通知接口
+  msgprivate:async function(params) {
+    return axios({
+      url: URL.msgprivate,
+      method: "get",
+      params,
+    });
+  },
+  msgcomments:async function(params) {
+    return axios({
+      url: URL.msgcomments,
+      method: "get",
+      params,
+    });
+  },
+  msgforwards:async function(params) {
+    return axios({
+      url: URL.msgforwards,
+      method: "get",
+      params,
+    });
+  },
+  msgnotices:async function(params) {
+    return axios({
+      url: URL.msgnotices,
+      method: "get",
+      params,
+    });
+  },
 }

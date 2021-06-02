@@ -127,6 +127,7 @@ export default {
   height: 70px;
   background-color: white;
   width: 100%;
+  z-index: 99;
   .songinfo {
     position: absolute;
     left: 20px;

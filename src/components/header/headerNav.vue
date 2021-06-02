@@ -65,6 +65,7 @@
           <color-pop v-if="colorpopShow"></color-pop>
           <span class="iconfont" @click="$router.push('/setting')">&#xe76c;</span>
           <span class="iconfont">&#xe74f;</span>
+          <messege-pop></messege-pop>
         </div>
         <div class="righttool">
           <span class="iconfont">&#xe7d2;</span>
@@ -84,6 +85,7 @@ const { ipcRenderer } = window.require("electron");
 import searchPop from "@/components/header/searchPop";
 import userPop from "@/components/header/userPop";
 import colorPop from "@/components/header/colorPop";
+import messegePop from "@/components/header/messegePop";
 export default {
   name: "headerNav",
   data() {
@@ -99,7 +101,8 @@ export default {
   components: {
     searchPop,
     userPop,
-    colorPop
+    colorPop,
+    messegePop
   },
   created() {
     // this.getuseraccount()

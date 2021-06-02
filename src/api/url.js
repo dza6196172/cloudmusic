@@ -16,5 +16,11 @@ export default URL = {
   qrcode:'/login/qr/create', //生成二维码
   qrcodelogin:'/login/qr/check', //检测二维码扫描状态接口
   userdetail:'/user/detail', //获取用户详情
-  useraccount:'/user/account' //获取账号信息
+  useraccount:'/user/account', //获取账号信息
+
+  //通知
+  msgprivate:'/msg/private', //私信
+  msgcomments:'/msg/comments', //评论
+  msgforwards:'/msg/forwards', //@我
+  msgnotices:'msg/notices' //通知
 }

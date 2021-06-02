@@ -4,7 +4,6 @@
     <small-nav-tab
       :snavlist="snavlist"
       @jumpto="jumpto"
-      @scrollposition="scrollposition"
     ></small-nav-tab>
     <div class="settingcontent" ref="settingcontent">
       <div class="account" ref="account">
@@ -226,38 +225,41 @@ export default {
   },
   methods: {
     jumpto(item) {
-      this.$refs[item.link].scrollIntoView({behavior: 'smooth',block:'start'});
-    },
-    scrollposition() {
-      console.log(this.$refs.settingcontent);
+      this.$refs[item.link].scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
     },
     handleScroll() {
       for (let i = 0; i < this.snavlist.length; i++) {
         if (
-          this.$refs[this.snavlist[i].link].offsetTop - 165 <=
+          this.$refs[this.snavlist[i].link].offsetTop - 167 <=
             this.$refs.settingcontent.scrollTop &&
           this.$refs.settingcontent.scrollTop <
             this.$refs[this.snavlist[i].link].offsetTop -
-              165 +
+              167 +
               this.$refs[this.snavlist[i].link].clientHeight
         ) {
           this.snavlist[i].isactive = true;
         } else {
           this.snavlist[i].isactive = false;
         }
-        if (
-          this.$refs.settingcontent.scrollTop +
-            this.$refs.settingcontent.clientHeight ==
-          this.$refs.settingcontent.scrollHeight
-        ) {
-          this.snavlist.forEach((item, index) => {
-            if (index != this.snavlist.length - 1) {
-              item.isactive = false;
-            } else {
-              item.isactive = true;
-            }
-          });
-        }
+      }
+      let allscroll = this.$refs.settingcontent.scrollTop + this.$refs.settingcontent.clientHeight
+      if(allscroll%1>0){
+        allscroll = parseInt(allscroll)+1
+      }
+      if (
+        allscroll ==
+        this.$refs.settingcontent.scrollHeight
+      ) {
+        this.snavlist.forEach((item, index) => {
+          if (index != this.snavlist.length - 1) {
+            item.isactive = false;
+          } else {
+            item.isactive = true;
+          }
+        });
       }
     },
   },
