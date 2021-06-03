@@ -68,7 +68,7 @@
           <messege-pop v-if="messegepopShow"></messege-pop>
         </div>
         <div class="righttool">
-          <span class="iconfont">&#xe7d2;</span>
+          <span class="iconfont" @click="minimize()">&#xe7d2;</span>
           <span class="iconfont">&#xe7b1;</span>
           <span class="iconfont">&#xe7d1;</span>
           <span class="iconfont">&#xe747;</span>
@@ -205,6 +205,10 @@ export default {
           this.$storage.set("userdetail", res);
         });
     },
+    minimize(){
+      this.$router.replace('/minimize')
+      ipcRenderer.send('minimize')
+    }
   },
 };
 </script>

@@ -4,7 +4,7 @@ import { app, protocol, BrowserWindow,shell,Menu } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
 const isDevelopment = process.env.NODE_ENV !== 'production'
-const { ipcMain } = require("electron");
+const { screen,ipcMain } = require("electron");
 const Store = require('electron-store');
 const store = new Store();
 let win;
@@ -68,7 +68,7 @@ async function createWindow() {
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
     await win.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
-    if (!process.env.IS_TEST) win.webContents.openDevTools({mode:'bottom'})
+    // if (!process.env.IS_TEST) win.webContents.openDevTools({mode:'bottom'})
   } else {
     createProtocol('app')
     // Load the index.html when not in development
@@ -122,6 +122,41 @@ if (isDevelopment) {
   }
 }
 
+  /**
+   * 窗口移动事件
+   */
+   let winStartPosition = {x: 0, y: 0};
+   let mouseStartPosition = {x: 0, y: 0};
+   let movingInterval = null;
+  ipcMain.on("drag", (events, canMoving) => {
+    if (canMoving) {
+      // 读取原位置
+      const winPosition = win.getPosition();
+      const winSize = win.getSize();
+      winStartPosition = { x: winPosition[0], y: winPosition[1] };
+      mouseStartPosition = screen.getCursorScreenPoint();
+      // 清除
+      if (movingInterval) {
+        clearInterval(movingInterval);
+      }
+      // 新开
+      movingInterval = setInterval(() => {
+        // 实时更新位置
+        const cursorPosition = screen.getCursorScreenPoint();
+        const x = winStartPosition.x + cursorPosition.x - mouseStartPosition.x;
+        const y = winStartPosition.y + cursorPosition.y - mouseStartPosition.y;
+        
+        win.setPosition(x, y, true);
+        win.setSize(winSize[0],winSize[1]);
+      }, 20);
+    } else {
+      clearInterval(movingInterval);
+      movingInterval = null;
+    }
+  });
+
+
+
 ipcMain.on('login', (e, param) => {
   createLoginWindow()
 })
@@ -138,4 +173,7 @@ ipcMain.on('loginsuccess',() => {
   win.webContents.send('loginsuccess')
 })
 
+ipcMain.on('minimize',() => {
+  win.setBounds({ width: 350,height:40 })
+})
  

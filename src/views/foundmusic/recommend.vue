@@ -318,6 +318,7 @@ export default {
           overflow: hidden;
           position: relative;
           cursor: pointer;
+          flex-shrink: 0;
           .iconfont {
             position: absolute;
             left: 50%;
@@ -348,6 +349,7 @@ export default {
           .artist {
             font-size: 13px;
             color: gray;
+            @include nowrap();
             span {
               cursor: pointer;
             }

@@ -1,5 +1,5 @@
 <template>
-  <div class="messege-pop">
+  <div class="messege-pop" @click.stop="">
     <div class="title">
       <span class="titletext">消息</span>
       <span class="readall">一键已读</span>

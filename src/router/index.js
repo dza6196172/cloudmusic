@@ -62,6 +62,11 @@ const routes = [
     path:'/login',
     name:'login',
     component: () => import('@/components/header/loginPop.vue'),
+  },
+  {
+    path:'/minimize',
+    name:'minimize',
+    component: () => import('@/views/minimize/minimize.vue'),
   }
 ]
 
