@@ -68,7 +68,7 @@ async function createWindow() {
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
     await win.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
-    // if (!process.env.IS_TEST) win.webContents.openDevTools({mode:'bottom'})
+    if (!process.env.IS_TEST) win.webContents.openDevTools({mode:'bottom'})
   } else {
     createProtocol('app')
     // Load the index.html when not in development
@@ -174,6 +174,9 @@ ipcMain.on('loginsuccess',() => {
 })
 
 ipcMain.on('minimize',() => {
-  win.setBounds({ width: 350,height:40 })
+  win.setBounds({ width: 850,height:440 })
+  win.setResizable(false)
+  win.setAlwaysOnTop(true,'pop-up-menu')
+
 })
  

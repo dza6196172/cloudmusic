@@ -206,7 +206,6 @@ export default {
         });
     },
     minimize(){
-      this.$router.replace('/minimize')
       ipcRenderer.send('minimize')
     }
   },
