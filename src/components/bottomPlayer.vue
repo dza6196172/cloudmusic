@@ -6,17 +6,24 @@
       ref="music"
       @canplay="gettime()"
     ></audio>
-    <div class="songinfo">
+    <div class="songinfo" v-if="!isminiMode">
       <div class="musicpic">
         <img :src="musicinfo.al.picUrl" alt="" width="50px" height="50px" />
       </div>
 
       <div class="musictext">
-        <div class="musicname">{{ musicinfo.name }}<span class="iconfont" v-if="musicinfo.name != ''">&#xe6e0;</span></div>
-        <div class="musicartist"><span v-for="(item,index) in musicinfo.ar" :key="index">{{ index==musicinfo.ar.length-1?item.name:item.name+' / ' }}</span></div>
+        <div class="musicname">
+          {{ musicinfo.name
+          }}<span class="iconfont" v-if="musicinfo.name != ''">&#xe6e0;</span>
+        </div>
+        <div class="musicartist">
+          <span v-for="(item, index) in musicinfo.ar" :key="index">{{
+            index == musicinfo.ar.length - 1 ? item.name : item.name + " / "
+          }}</span>
+        </div>
       </div>
     </div>
-    <div class="control">
+    <div class="control" v-if="!isminiMode">
       <div class="topcontrol">
         <div class="playmode"><span class="iconfont">&#xe6a0;</span></div>
         <div class="lastsong"><span class="iconfont">&#xe60c;</span></div>
@@ -33,10 +40,45 @@
         </div>
       </div>
     </div>
+    <div
+      class="minimize"
+      @mousedown="drag(true)"
+      @mouseup="drag(false)"
+      v-if="isminiMode"
+    >
+      <div class="musicpic">
+        <img :src="musicinfo.al.picUrl =='' ? defaultpic :musicinfo.al.picUrl" alt="" />
+      </div>
+      <div class="minicontrol">
+        <div class="lastsong"><span class="iconfont">&#xe60c;</span></div>
+        <div class="miniplay" @click="controlplay()">
+          <span class="iconfont" v-if="!isplay">&#xe60a;</span>
+          <span class="iconfont" v-else>&#xe60b; </span>
+        </div>
+        <div class="nextsong"><span class="iconfont">&#xe60d;</span></div>
+      </div>
+      <div class="minifunction">
+        <div class="volume">
+          <span class="iconfont">&#xe681;</span>
+        </div>
+        <div class="menu">
+          <span class="iconfont">&#xe601;</span>
+        </div>
+      </div>
+      <div class="restore">
+        <div class="close" @click="winclose()">
+          <span class="iconfont">&#xe747;</span>
+        </div>
+        <div class="maximize" @click="maximize()">
+          <span class="iconfont">&#xe7d1;</span>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+const { ipcRenderer } = window.require("electron");
 export default {
   name: "bottom-player",
   data() {
@@ -47,10 +89,11 @@ export default {
       currenttime: 0,
       musicduration: 1,
       currenttimer: null,
+      defaultpic:require("@/assets/img/disc.jpg"),
       musicinfo: {
         name: "",
         al: {
-          picUrl: "",
+          picUrl: '',
         },
         ar: [
           {
@@ -74,9 +117,9 @@ export default {
         that.$refs.music.load();
       }
     },
-    currentmusicinfo(){
+    currentmusicinfo() {
       this.musicinfo = this.$store.state.musicinfo;
-    }
+    },
   },
   computed: {
     getredbar() {
@@ -85,9 +128,12 @@ export default {
     currentmusicurl() {
       return this.$store.state.musicUrl;
     },
-    currentmusicinfo(){
-      return this.$store.state.musicinfo
-    }
+    currentmusicinfo() {
+      return this.$store.state.musicinfo;
+    },
+    isminiMode() {
+      return this.$store.state.isminiMode;
+    },
   },
   methods: {
     controlplay() {
@@ -113,6 +159,16 @@ export default {
         clearInterval(this.currenttimer);
       }
     },
+    drag(boolean) {
+      ipcRenderer.send("drag", { drag: boolean, minimode: true });
+    },
+    winclose(){
+      ipcRenderer.send('winclose')
+    },
+    maximize(){
+      this.$store.state.isminiMode = false
+      ipcRenderer.send('maximize')
+    }
   },
 };
 </script>
@@ -138,19 +194,19 @@ export default {
       border-radius: 5px;
       overflow: hidden;
     }
-    .musictext{
+    .musictext {
       display: flex;
       flex-direction: column;
       justify-content: space-evenly;
       font-size: 15px;
       margin-left: 10px;
-      .musicname{
-        .iconfont{
+      .musicname {
+        .iconfont {
           margin-left: 10px;
           cursor: pointer;
         }
       }
-      .musicartist{
+      .musicartist {
         font-size: 13px;
       }
     }
@@ -212,6 +268,86 @@ export default {
           background-color: $topic;
         }
       }
+    }
+  }
+}
+.minimize {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: flex;
+  .musicpic {
+    img {
+      width: 100vh;
+      height: 100vh;
+    }
+  }
+  .minicontrol {
+    width: 180px;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    .lastsong{
+      margin-right: 10px;
+      cursor: pointer;
+      .iconfont{
+        color: $topic;
+      }
+    }
+    .miniplay {
+      width: 60vh;
+      height: 60vh;
+      border-radius: 50%;
+      border: 1px solid $topic;
+      position: relative;
+      cursor: pointer;
+      .iconfont {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        color: $topic;
+        font-size: 14px;
+      }
+    }
+    .nextsong{
+      cursor: pointer;
+      margin-left: 10px;
+      .iconfont{
+        color: $topic;
+      }
+    }
+  }
+  .minifunction{
+    display: flex;
+    align-items: center;
+    .iconfont{
+      color: gray;
+      font-size: 13px;
+      cursor: pointer;
+    }
+    .volume{
+      margin: 0 10px;
+      padding-bottom: 5px;
+    }
+    .menu{
+      padding-bottom: 5px;
+    }
+  }
+  .restore{
+    position: absolute;
+    right: 4px;
+    top: -2px;
+    .iconfont{
+      color: gray;
+      cursor: pointer;
+      font-size: 13px;
+    }
+    .maximize{
+      transform: scaleY(.7);
+      margin-top: -8px;
     }
   }
 }

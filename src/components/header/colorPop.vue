@@ -1,5 +1,5 @@
 <template>
-  <div class="colorpop" @click.stop="">
+  <div class="colorpop" @click.stop="" @mousedown="drag()">
     <div class="colorlist">
       <div
         class="coloritem"
@@ -49,6 +49,7 @@
 
 <script>
 import VueSlider from "vue-slider-component";
+const { ipcRenderer } = window.require("electron");
 import "vue-slider-component/theme/default.css";
 export default {
   name: "color-pop",
@@ -155,6 +156,9 @@ export default {
       this.$storage.set("colorvalue", this.colorvalue);
       this.$storage.set("brightvalue", this.brightvalue);
     },
+    drag(){
+      ipcRenderer.send('drag',{ drag: false, minimode: false })
+    }
   },
 };
 </script>

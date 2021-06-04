@@ -6,6 +6,27 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "17602460",
+      "name": "unmaximize",
+      "font_class": "unmaximize",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
+    },
+    {
+      "icon_id": "11956001",
+      "name": "音量",
+      "font_class": "yinliang",
+      "unicode": "e681",
+      "unicode_decimal": 59009
+    },
+    {
+      "icon_id": "18697561",
+      "name": "菜单",
+      "font_class": "menu-two",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
       "icon_id": "5201219",
       "name": "绑定",
       "font_class": "bangding",

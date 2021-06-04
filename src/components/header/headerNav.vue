@@ -69,9 +69,10 @@
         </div>
         <div class="righttool">
           <span class="iconfont" @click="minimize()">&#xe7d2;</span>
-          <span class="iconfont">&#xe7b1;</span>
-          <span class="iconfont">&#xe7d1;</span>
-          <span class="iconfont">&#xe747;</span>
+          <span class="iconfont" @click="minwin()">&#xe7b1;</span>
+          <span class="iconfont" @click="maxwin()" v-if="!ismax">&#xe7d1;</span>
+          <span class="iconfont" @click="unmaxwin()" v-else>&#xe60e;</span>
+          <span class="iconfont" @click="closewin()">&#xe747;</span>
         </div>
       </div>
     </div>
@@ -147,6 +148,9 @@ export default {
     },
     messegepopShow(){
       return this.$store.state.messegepopShow
+    },
+    ismax(){
+      return this.$store.state.ismax
     }
   },
   methods: {
@@ -205,9 +209,27 @@ export default {
           this.$storage.set("userdetail", res);
         });
     },
+    drag(boolean){
+      ipcRenderer.send("drag",{drag:boolean,minimode:false})
+    },
     minimize(){
+      this.$store.state.isminiMode = true
       ipcRenderer.send('minimize')
-    }
+    },
+    minwin(){
+      ipcRenderer.send('minwin')
+    },
+    maxwin(){
+      this.$store.state.ismax = true
+      ipcRenderer.send('maxwin')
+    },
+    unmaxwin(){
+      this.$store.state.ismax = false
+      ipcRenderer.send('unmaxwin')
+    },
+    closewin(){
+      ipcRenderer.send('closewin')
+    },
   },
 };
 </script>
@@ -221,12 +243,12 @@ export default {
   width: 100%;
   height: 60px;
   background-color: $topic;
-  -webkit-app-region: drag;
   padding: 0 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   z-index: 99;
+  -webkit-app-region: drag;
   .left {
     width: 480px;
     justify-content: space-between;
@@ -253,8 +275,8 @@ export default {
         justify-content: space-between;
         align-items: center;
         position: relative;
+        -webkit-app-region: no-drag;
         .back {
-          -webkit-app-region: no-drag;
           position: absolute;
           width: 25px;
           height: 25px;
@@ -266,7 +288,6 @@ export default {
           cursor: pointer;
         }
         .go {
-          -webkit-app-region: no-drag;
           position: absolute;
           right: 0;
           width: 25px;
@@ -303,30 +324,31 @@ export default {
       position: relative;
       display: flex;
       .avatar {
-        -webkit-app-region: no-drag;
         width: 30px;
         height: 30px;
         margin-right: 5px;
         border-radius: 50%;
         overflow: hidden;
         cursor: pointer;
+        -webkit-app-region: no-drag;
         img {
           width: 100%;
           height: 100%;
         }
       }
       .username {
-        -webkit-app-region: no-drag;
         font-size: 12px;
         color: rgba($color: #ffffff, $alpha: 0.7);
         line-height: 30px;
         cursor: pointer;
+        -webkit-app-region: no-drag;
         span {
           &:hover {
             color: white;
           }
         }
         .vipicon {
+          -webkit-app-region: no-drag;
           display: inline-block;
           vertical-align: middle;
           width: 35px;
@@ -344,8 +366,8 @@ export default {
       justify-content: space-around;
       margin-left: 10px;
       border-right: 1px solid rgba($color: #ffffff, $alpha: 0.5);
+      -webkit-app-region: no-drag;
       .iconfont {
-        -webkit-app-region: no-drag;
         color: rgba($color: #ffffff, $alpha: 0.7);
         font-size: 22px;
         font-weight: 100;
@@ -362,8 +384,8 @@ export default {
       display: flex;
       justify-content: space-around;
       margin-left: 10px;
+      -webkit-app-region: no-drag;
       .iconfont {
-        -webkit-app-region: no-drag;
         color: rgba($color: #ffffff, $alpha: 0.7);
         font-size: 22px;
         font-weight: 100;

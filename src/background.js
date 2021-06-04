@@ -3,10 +3,12 @@
 import { app, protocol, BrowserWindow,shell,Menu } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
+import store from './store'
 const isDevelopment = process.env.NODE_ENV !== 'production'
 const { screen,ipcMain } = require("electron");
 const Store = require('electron-store');
-const store = new Store();
+const storage = new Store();
+
 let win;
 let loginwin;
 
@@ -68,7 +70,7 @@ async function createWindow() {
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
     await win.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
-    if (!process.env.IS_TEST) win.webContents.openDevTools({mode:'bottom'})
+    // if (!process.env.IS_TEST) win.webContents.openDevTools({mode:'bottom'})
   } else {
     createProtocol('app')
     // Load the index.html when not in development
@@ -129,7 +131,7 @@ if (isDevelopment) {
    let mouseStartPosition = {x: 0, y: 0};
    let movingInterval = null;
   ipcMain.on("drag", (events, canMoving) => {
-    if (canMoving) {
+    if (canMoving.drag) {
       // 读取原位置
       const winPosition = win.getPosition();
       const winSize = win.getSize();
@@ -145,9 +147,13 @@ if (isDevelopment) {
         const cursorPosition = screen.getCursorScreenPoint();
         const x = winStartPosition.x + cursorPosition.x - mouseStartPosition.x;
         const y = winStartPosition.y + cursorPosition.y - mouseStartPosition.y;
-        
+
         win.setPosition(x, y, true);
-        win.setSize(winSize[0],winSize[1]);
+        if(canMoving.minimode){
+          win.setBounds({ width: 300,height:45})
+        }else{
+          win.setBounds({ width: winSize[0],height:winSize[1] })
+        }
       }, 20);
     } else {
       clearInterval(movingInterval);
@@ -172,11 +178,41 @@ ipcMain.on('closelogin' ,() => {
 ipcMain.on('loginsuccess',() => {
   win.webContents.send('loginsuccess')
 })
-
+let mainwinposition = []
+let miniwinposition = []
 ipcMain.on('minimize',() => {
-  win.setBounds({ width: 850,height:440 })
+  mainwinposition = win.getPosition()
+  if(miniwinposition.length != 0){
+    win.setPosition(miniwinposition[0],miniwinposition[1])
+  }
+  win.setBounds({ width: 300,height:45 })
   win.setResizable(false)
   win.setAlwaysOnTop(true,'pop-up-menu')
-
 })
- 
+ipcMain.on('maximize',() => {
+  miniwinposition = win.getPosition()
+  win.setBounds({ width: 1000,height:670 })
+  win.setPosition(mainwinposition[0],mainwinposition[1])
+  win.setResizable(true)
+  win.setAlwaysOnTop(false)
+  console.log(store.state.ismax);
+  console.log(win.isMaximized());
+  if(win.isMaximized()){
+    store.state.ismax =true
+    win.maximize();
+  }
+})
+
+ipcMain.on('minwin',() => {
+  win.minimize()
+})
+ipcMain.on('unmaxwin',() => {
+  win.unmaximize()
+})
+ipcMain.on('maxwin',() => {
+  win.maximize()
+})
+
+ipcMain.on('closewin',() => {
+  win.destroy()
+})

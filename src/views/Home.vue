@@ -1,7 +1,7 @@
 <template>
   <div class="home" @click="hidePop()">
-    <header-nav></header-nav>
-    <div class="maincontent">
+    <header-nav v-if="!isminiMode"></header-nav>
+    <div class="maincontent" v-if="!isminiMode">
       <div class="left"><side-nav></side-nav></div>
       <div class="right"><router-view/></div>
     </div>
@@ -19,6 +19,11 @@ export default {
     HeaderNav,
     sideNav,
     bottomPlayer
+  },
+  computed: {
+    isminiMode(){
+      return this.$store.state.isminiMode
+    }
   },
   methods: {
     hidePop(){
