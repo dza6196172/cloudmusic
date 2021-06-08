@@ -275,7 +275,6 @@ export default {
         justify-content: space-between;
         align-items: center;
         position: relative;
-        -webkit-app-region: no-drag;
         .back {
           position: absolute;
           width: 25px;
@@ -286,6 +285,7 @@ export default {
           border-radius: 50%;
           left: 0;
           cursor: pointer;
+        -webkit-app-region: no-drag;
         }
         .go {
           position: absolute;
@@ -297,6 +297,7 @@ export default {
           line-height: 25px;
           border-radius: 50%;
           cursor: pointer;
+        -webkit-app-region: no-drag;
         }
       }
 

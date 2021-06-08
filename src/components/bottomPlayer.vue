@@ -7,14 +7,14 @@
       @canplay="gettime()"
     ></audio>
     <div class="songinfo" v-if="!isminiMode">
-      <div class="musicpic">
+      <div class="musicpic" v-if="musicinfo.al.picUrl != ''">
         <img :src="musicinfo.al.picUrl" alt="" width="50px" height="50px" />
       </div>
 
       <div class="musictext">
         <div class="musicname">
-          {{ musicinfo.name
-          }}<span class="iconfont" v-if="musicinfo.name != ''">&#xe6e0;</span>
+          <span class="musictitle">{{ musicinfo.name }}</span>
+          <span class="iconfont" v-if="musicinfo.name != ''">&#xe6e0;</span>
         </div>
         <div class="musicartist">
           <span v-for="(item, index) in musicinfo.ar" :key="index">{{
@@ -39,6 +39,11 @@
           <div class="redline" :style="{ width: getredbar }"></div>
         </div>
       </div>
+    </div>
+    <div class="rightfunction">
+      <div class="iconfont" @click="test()">&#xe681;</div>
+      <div class="volumebar" @mouseover="volumedotShow = true" @mouseleave="volumedotShow = false"><vue-slider dotSize="8" tooltip="none" :dotStyle="{display:volumedotShow?'block':'none'}" v-model="musicvolume" @drag-end="changevolume()" @dragging="dragvolume()"></vue-slider></div>
+      <div class="iconfont">&#xe601;</div>
     </div>
     <div
       class="minimize"
@@ -79,6 +84,7 @@
 
 <script>
 const { ipcRenderer } = window.require("electron");
+import VueSlider from "vue-slider-component";
 export default {
   name: "bottom-player",
   data() {
@@ -88,8 +94,10 @@ export default {
       currentmusic: "",
       currenttime: 0,
       musicduration: 1,
+      musicvolume:1,
       currenttimer: null,
       defaultpic:require("@/assets/img/disc.jpg"),
+      volumedotShow:false,
       musicinfo: {
         name: "",
         al: {
@@ -103,7 +111,12 @@ export default {
       },
     };
   },
-  created() {},
+  components:{
+    VueSlider
+  },
+  created() {
+    this.musicvolume = this.$storage.get('musicvolume')
+  },
   watch: {
     currentmusicurl() {
       let that = this;
@@ -136,6 +149,9 @@ export default {
     },
   },
   methods: {
+    test(){
+      console.log(this.$refs.music.volume);
+    },
     controlplay() {
       if (this.$refs.music.paused) {
         this.isplay = true;
@@ -149,6 +165,7 @@ export default {
     },
     gettime() {
       this.musicduration = this.$refs.music.duration;
+      this.dragvolume();
     },
     getprogress(index) {
       if (index == 0) {
@@ -157,6 +174,17 @@ export default {
         }, 1000);
       } else {
         clearInterval(this.currenttimer);
+      }
+    },
+    changevolume(){
+      this.$storage.set('musicvolume',this.musicvolume)
+      if(this.$refs.music.volume){
+        this.$refs.music.volume = this.musicvolume/100
+      }
+    },
+    dragvolume(){
+      if(this.$refs.music.volume){
+        this.$refs.music.volume = this.musicvolume/100
       }
     },
     drag(boolean) {
@@ -193,6 +221,28 @@ export default {
     .musicpic {
       border-radius: 5px;
       overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      &::after{
+        content: "\e745";
+        font-family: 'iconfont';
+        color: white;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        padding-top: 12px;
+        font-size: 20px;
+        top: 0;
+        left: 0;
+        background-color: rgba($color: #000000, $alpha: .6);
+        display: none;
+      }
+      &:hover{
+        &::after{
+          display: block;
+        }
+      }
     }
     .musictext {
       display: flex;
@@ -201,6 +251,10 @@ export default {
       font-size: 15px;
       margin-left: 10px;
       .musicname {
+        .musictitle{
+          width: 150px;
+          @include nowrap();
+        }
         .iconfont {
           margin-left: 10px;
           cursor: pointer;
@@ -208,6 +262,8 @@ export default {
       }
       .musicartist {
         font-size: 13px;
+        width: 150px;
+        @include nowrap();
       }
     }
   }
@@ -268,6 +324,27 @@ export default {
           background-color: $topic;
         }
       }
+    }
+  }
+  .rightfunction{
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    .volumebar{
+      width: 60px;
+      margin: 2px 20px 0 10px;
+      ::v-deep .vue-slider-process{
+        background-color: $topic;
+      }
+      ::v-deep .vue-slider-dot-handle{
+        background-color: $topic;
+        box-shadow: none;
+      }
+    }
+    .iconfont{
+      cursor: pointer;
     }
   }
 }
