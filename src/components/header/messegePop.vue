@@ -4,7 +4,7 @@
       <span class="titletext">消息</span>
       <span class="readall">一键已读</span>
     </div>
-    <div class="messegetab">
+    <div class="roundtab">
       <div :class="{tabitem:true,tabitemactive:currenttab==1}" @click="getmsgprivate()">私信</div>
       <div :class="{tabitem:true,tabitemactive:currenttab==2}">评论</div>
       <div :class="{tabitem:true,tabitemactive:currenttab==3}">@我</div>
@@ -29,7 +29,7 @@
             <div class="content">
               <div class="forminfo">
                 <div class="fromname">{{ item.fromUser.nickname }}</div>
-                <div class="fromtime">{{ item.lastMsgTime | date }}</div>
+                <div class="fromtime">{{ item.lastMsgTime | msgdate }}</div>
               </div>
               <div class="msg">{{ JSON.parse(item.lastMsg).msg }}</div>
             </div>
@@ -92,32 +92,7 @@ export default {
       font-weight: 700;
     }
   }
-  .messegetab {
-    width: calc(100% - 60px);
-    height: 30px;
-    border-radius: 15px;
-    border: 1px solid lightgray;
-    margin: 0 30px 15px 30px;
-    display: flex;
-    justify-content: space-between;
-    .tabitem {
-      width: 25%;
-      height: 28px;
-      text-align: center;
-      border-radius: 14px;
-      font-size: 12px;
-      line-height: 28px;
-      cursor: default;
-      &:hover {
-        background-color: #f4f4f5;
-      }
-    }
-    .tabitemactive{
-      background-color: #bbbbbb;
-      color: white;
-      pointer-events: none;
-    }
-  }
+  
   .messegecontent {
     padding: 0 30px;
     overflow: scroll;

@@ -1,4 +1,4 @@
-const date = dateval => {
+const msgdate = dateval => {
   let historydate = new Date(dateval)
   let currentdate = new Date()
   if(historydate.getFullYear()<currentdate.getFullYear()){
@@ -20,5 +20,16 @@ const date = dateval => {
   }
 }
 
+const musicdt = val => {
+  let minutes = parseInt(val/1000/60)
+  let seconds = parseInt(val/1000%60)
+  return minutes.toString().padStart(2,'0')+':'+seconds.toString().padStart(2,'0')
+}
 
-export { date};
+const date = val => {
+  let currentdate = new Date(val)
+  return currentdate.getFullYear()+'-'+(currentdate.getMonth()+1).toString().padStart(2,'0')+'-'+(currentdate.getDay()).toString().padStart(2,'0')
+}
+
+
+export { msgdate , musicdt , date};

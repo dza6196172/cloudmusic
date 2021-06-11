@@ -12,7 +12,7 @@
 <script>
 import HeaderNav from '@/components/header/headerNav.vue'
 import sideNav from '@/components/sideNav.vue'
-import bottomPlayer from '@/components/bottomPlayer.vue'
+import bottomPlayer from '@/components/bottom/bottomPlayer.vue'
 export default {
   name: "home",
   components:{
@@ -30,6 +30,7 @@ export default {
       this.$store.state.userpopShow = false
       this.$store.state.colorpopShow = false
       this.$store.state.messegepopShow = false
+      this.$store.state.playlistShow = false
     }
   },
 }
@@ -42,6 +43,8 @@ export default {
     height: calc(100vh - 130px);
     .left{
       height: 100%;
+      width: 200px;
+      flex-shrink: 0;
       border-right: 1px solid #e1e1e1;
       overflow-y: auto;
       overflow-x: hidden;

@@ -117,6 +117,7 @@ export const indexApi = {
       params,
     });
   },
+  
 
   //通知接口
   msgprivate:async function(params) {
@@ -143,6 +144,23 @@ export const indexApi = {
   msgnotices:async function(params) {
     return axios({
       url: URL.msgnotices,
+      method: "get",
+      params,
+    });
+  },
+
+  //歌单
+  userplaylist:async function(params) {
+    return axios({
+      url: URL.userplaylist,
+      method: "get",
+      params,
+    });
+  },
+  //歌单列表
+  playlistdetail:async function(params) {
+    return axios({
+      url: URL.playlistdetail,
       method: "get",
       params,
     });

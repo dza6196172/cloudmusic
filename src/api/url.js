@@ -22,5 +22,9 @@ export default URL = {
   msgprivate:'/msg/private', //私信
   msgcomments:'/msg/comments', //评论
   msgforwards:'/msg/forwards', //@我
-  msgnotices:'msg/notices' //通知
+  msgnotices:'msg/notices', //通知
+
+  //歌单
+  userplaylist:'/user/playlist',//获取用户歌单
+  playlistdetail:'/playlist/detail',//获取歌单列表
 }

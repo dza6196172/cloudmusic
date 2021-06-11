@@ -6,6 +6,7 @@
       ref="music"
       @canplay="gettime()"
     ></audio>
+    <div class="place"></div>
     <div class="songinfo" v-if="!isminiMode">
       <div class="musicpic" v-if="musicinfo.al.picUrl != ''">
         <img :src="musicinfo.al.picUrl" alt="" width="50px" height="50px" />
@@ -43,7 +44,7 @@
     <div class="rightfunction">
       <div class="iconfont" @click="test()">&#xe681;</div>
       <div class="volumebar" @mouseover="volumedotShow = true" @mouseleave="volumedotShow = false"><vue-slider dotSize="8" tooltip="none" :dotStyle="{display:volumedotShow?'block':'none'}" v-model="musicvolume" @drag-end="changevolume()" @dragging="dragvolume()"></vue-slider></div>
-      <div class="iconfont">&#xe601;</div>
+      <div class="iconfont" @click.stop="$store.state.playlistShow = !$store.state.playlistShow">&#xe601;</div>
     </div>
     <div
       class="minimize"
@@ -79,12 +80,16 @@
         </div>
       </div>
     </div>
+    <div class="songlist" v-if="playlistShow">
+      <song-list></song-list>
+    </div>
   </div>
 </template>
 
 <script>
 const { ipcRenderer } = window.require("electron");
 import VueSlider from "vue-slider-component";
+import songList from "@/components/bottom/songlist"
 export default {
   name: "bottom-player",
   data() {
@@ -112,7 +117,8 @@ export default {
     };
   },
   components:{
-    VueSlider
+    VueSlider,
+    songList
   },
   created() {
     this.musicvolume = this.$storage.get('musicvolume')
@@ -147,6 +153,9 @@ export default {
     isminiMode() {
       return this.$store.state.isminiMode;
     },
+    playlistShow(){
+      return this.$store.state.playlistShow;
+    }
   },
   methods: {
     test(){
@@ -203,6 +212,15 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/assets/css/common.scss";
+.place{
+  width: 100%;
+  height: 70px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: white;
+  z-index: -1;
+}
 .bottomplayer {
   position: fixed;
   border-top: 1px solid #e1e1e1;

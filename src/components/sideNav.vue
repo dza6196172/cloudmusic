@@ -15,12 +15,52 @@
       <li><span class="iconfont">&#xe693;</span>我的电台</li>
       <li><span class="iconfont">&#xe626;</span>我的收藏</li>
     </ul>
+    <div class="navtitle">创建的歌单</div>
+    <ul>
+      <div v-for="(item,index) in userplaylist" :key="index" @click="selectPlayList(item.id)">
+        <li v-if="item.creator.userId == $storage.get('useraccount').userId"><span class="iconfont">&#xe627;</span>{{item.name}}</li>
+      </div>
+    </ul>
+    <div class="navtitle">收藏的歌单</div>
+    <ul>
+      <div v-for="(item,index) in userplaylist" :key="index" @click="selectPlayList(item.id)">
+        <li v-if="item.creator.userId != $storage.get('useraccount').userId"><span class="iconfont">&#xe627;</span>{{item.name}}</li>
+      </div>
+    </ul>
   </div>
 </template>
 
 <script>
+import {indexApi} from '@/api/request';
 export default {
   name: "side-nav",
+  data() {
+    return {
+      userplaylist:[]
+    }
+  },
+  created() {
+    if(this.$storage.get('useraccount')){
+      this.getUserPlaylist();
+    }
+  },
+  methods: {
+    getUserPlaylist(){
+      indexApi.userplaylist({
+        uid:this.$storage.get('useraccount').userId
+      }).then(res => {
+        this.userplaylist = res.playlist
+      })
+    },
+    selectPlayList(id){
+      this.$router.push({
+        name:'playlist',
+        params:{
+          id:id
+        }
+      })
+    }
+  },
 };
 </script>
 
@@ -28,13 +68,15 @@ export default {
 @import "@/assets/css/common.scss";
 .sidenav {
   padding: 10px 2px 0 10px;
-  width: 220px;
+  width: 200px;
   ul {
     li {
       padding: 8px 10px;
       margin: 2px 0;
       color: rgba($color: #000000, $alpha: 0.8);
-      font-size: 15px;
+      font-size: 14px;
+      width: 100%;
+      @include nowrap();
       &:hover {
         background-color: #f6f6f7;
         cursor: pointer;

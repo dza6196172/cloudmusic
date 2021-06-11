@@ -55,7 +55,12 @@ const routes = [
         path: '/setting',
         name: 'setting',
         component: () => import('@/views/setting/setting.vue'),
-      }
+      },
+      {
+        path: '/playlist/:id',
+        name: 'playlist',
+        component: () => import('@/views/playlist/playlist.vue'),
+      },
     ]
   },
   {
