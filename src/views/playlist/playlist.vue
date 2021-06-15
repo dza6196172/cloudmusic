@@ -19,9 +19,12 @@
           <div class="playall">
             <div class="replaceall"><span class="iconfont">&#xe60a;</span>播放全部</div>
             <div class="pushall">+</div>
+            <div class="collect"><span class="iconfont">&#xe687;</span>收藏</div>
+            <div class="share"><span class="iconfont">&#xe658;</span>分享</div>
+            <div class="downloadall"><span class="iconfont">&#xe74d;</span>下载全部</div>
           </div>
         </div>
-        <div class="tag"></div>
+        <div class="tag">标签：</div>
         <div class="timecountinfo"></div>
         <div class="desc"></div>
       </div>
@@ -99,6 +102,7 @@ export default {
       }
       .operate{
         display: flex;
+        align-items: center;
         padding: 5px 0;
         .playall{
           display: flex;
@@ -144,6 +148,19 @@ export default {
               left: 0;
               top: 0;
             }
+          }
+        }
+        .collect,.share,.downloadall{
+          width: 100px;
+          height: 30px;
+          border-radius: 15px;
+          border: 1px solid #d8d8d8;
+          text-align: center;
+          line-height: 28px;
+          margin-left: 10px;
+          font-size: 13px;
+          .iconfont{
+            margin-right: 5px;
           }
         }
       }

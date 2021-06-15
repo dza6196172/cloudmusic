@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "11076593",
+      "name": "分 享",
+      "font_class": "fenxiang",
+      "unicode": "e658",
+      "unicode_decimal": 58968
+    },
+    {
       "icon_id": "13352433",
       "name": "编 辑",
       "font_class": "bianji",
