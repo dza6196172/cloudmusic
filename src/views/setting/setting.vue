@@ -19,7 +19,7 @@
         </div>
       </div>
       <div class="normal" ref="normal">
-        <div class="title">常规</div>
+        <div class="smalltitle">常规</div>
         <div class="content">
           <div>第一</div>
           <div>第一</div>
@@ -31,7 +31,7 @@
         </div>
       </div>
       <div class="play" ref="play">
-        <div class="title">播放</div>
+        <div class="smalltitle">播放</div>
         <div class="content">
           <div>第一</div>
           <div>第一</div>
@@ -47,7 +47,7 @@
         </div>
       </div>
       <div class="messege" ref="messege">
-        <div class="title">消息与隐私</div>
+        <div class="smalltitle">消息与隐私</div>
         <div class="content">
           <div>第一</div>
           <div>第一</div>
@@ -58,7 +58,7 @@
         </div>
       </div>
       <div class="shortcut" ref="shortcut">
-        <div class="title">快捷键</div>
+        <div class="smalltitle">快捷键</div>
         <div class="content">
           <div>第一</div>
           <div>第一</div>
@@ -68,7 +68,7 @@
         </div>
       </div>
       <div class="download" ref="download">
-        <div class="title">下载设置</div>
+        <div class="smalltitle">下载设置</div>
         <div class="content">
           <div>第一</div>
           <div>第一</div>
@@ -88,7 +88,7 @@
         </div>
       </div>
       <div class="lyric" ref="lyric">
-        <div class="title">歌词</div>
+        <div class="smalltitle">歌词</div>
         <div class="content">
           <div>第一</div>
           <div>第一</div>
@@ -114,7 +114,7 @@
         </div>
       </div>
       <div class="tool" ref="tool">
-        <div class="title">工具</div>
+        <div class="smalltitle">工具</div>
         <div class="content">
           <div>第一</div>
           <div>第一</div>
@@ -140,7 +140,7 @@
         </div>
       </div>
       <div class="about" ref="about">
-        <div class="title">关于网易云音乐</div>
+        <div class="smalltitle">关于网易云音乐</div>
         <div class="content">
           <div>第一</div>
           <div>第一</div>
@@ -272,11 +272,6 @@ export default {
   padding: 0 30px;
   overflow: auto;
   height: calc(100vh - 235px);
-  .title {
-    font-size: 15px;
-    font-weight: 700;
-    padding: 20px 0;
-  }
   .account {
     font-weight: 400;
     padding-bottom: 20px;

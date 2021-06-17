@@ -15,16 +15,16 @@
       <li><span class="iconfont">&#xe693;</span>我的电台</li>
       <li><span class="iconfont">&#xe626;</span>我的收藏</li>
     </ul>
-    <div class="navtitle">创建的歌单</div>
-    <ul>
+    <div class="navtitle" v-if="showUserCollect">创建的歌单</div>
+    <ul v-if="showUserCollect">
       <div v-for="(item,index) in userplaylist" :key="index" @click="selectPlayList(item.id)">
-        <li v-if="item.creator.userId == $storage.get('useraccount').userId"><span class="iconfont">&#xe627;</span>{{item.name}}</li>
+        <li v-if="item.creator.userId == $storage.get('useraccount').userId" :class="{activeroute:$route.params.id == item.id}"><span class="iconfont">&#xe627;</span>{{item.name}}</li>
       </div>
     </ul>
-    <div class="navtitle">收藏的歌单</div>
-    <ul>
+    <div class="navtitle" v-if="showOtherCollect">收藏的歌单</div>
+    <ul v-if="showOtherCollect">
       <div v-for="(item,index) in userplaylist" :key="index" @click="selectPlayList(item.id)">
-        <li v-if="item.creator.userId != $storage.get('useraccount').userId"><span class="iconfont">&#xe627;</span>{{item.name}}</li>
+        <li v-if="item.creator.userId != $storage.get('useraccount').userId" :class="{activeroute:$route.params.id == item.id}"><span class="iconfont">&#xe627;</span>{{item.name}}</li>
       </div>
     </ul>
   </div>
@@ -39,9 +39,28 @@ export default {
       userplaylist:[]
     }
   },
+  inject:['reload'],
   created() {
     if(this.$storage.get('useraccount')){
       this.getUserPlaylist();
+    }
+  },
+  computed: {
+    showUserCollect(){
+      if(this.userplaylist.length == 0){
+        return false
+      }
+      return this.userplaylist.some(item => {
+        return item.creator.userId == this.$storage.get('useraccount').userId
+      })
+    },
+    showOtherCollect(){
+      if(this.userplaylist.length == 0){
+        return false
+      }
+      return this.userplaylist.some(item => {
+        return item.creator.userId != this.$storage.get('useraccount').userId
+      })
     }
   },
   methods: {
@@ -59,6 +78,7 @@ export default {
           id:id
         }
       })
+      this.reload();
     }
   },
 };

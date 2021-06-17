@@ -1,11 +1,11 @@
 <template>
   <div class="wrap">
-    <div class="smallnavtab">
+    <div class="smallnavtab" :style="{position:position}">
       <ul>
         <li :class="{active:item.isactive}" v-for="(item,index) in snavlist" :key="index" @click="jumpto(item)">{{item.name}}</li>
       </ul>
     </div>
-    <div class="place"></div>
+    <div class="place" v-if="position == 'fixed'"></div>
   </div>
 </template>
 
@@ -19,6 +19,12 @@ export default {
         return []
       }
     },
+    position:{
+      type:String,
+      default(){
+        return 'fixed'
+      }
+    }
   },
   methods: {
     jumpto(item){
@@ -31,7 +37,6 @@ export default {
 <style lang="scss" scoped>
 @import "@/assets/css/common.scss";
 .smallnavtab{
-  position: fixed;
   z-index: 10;
   width: 100%;
   height: 45px;

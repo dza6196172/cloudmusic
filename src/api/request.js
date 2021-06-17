@@ -157,10 +157,16 @@ export const indexApi = {
       params,
     });
   },
-  //歌单列表
   playlistdetail:async function(params) {
     return axios({
       url: URL.playlistdetail,
+      method: "get",
+      params,
+    });
+  },
+  playlistcomment:async function(params) {
+    return axios({
+      url: URL.playlistcomment,
       method: "get",
       params,
     });

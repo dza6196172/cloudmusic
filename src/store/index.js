@@ -48,8 +48,20 @@ export default new Vuex.Store({
         cookie:storage.get('token')
       }).then(res => {
          state.webplaylist = res.playlist
+         let songids = []
+         state.webplaylist.trackIds.forEach(item => {
+           songids.push(item.id)
+         })
+         indexApi.getmusicinfo({
+           ids:songids.join(',')
+         }).then(res => {
+           state.webplaylist.tracks = res.songs
+         })
       })
     },
+    playall(state){
+      state.playlist = state.webplaylist
+    }
   },
   actions: {
     

@@ -1,5 +1,6 @@
 $topic: var(--topic, #ec4141);
 $shadow:0px 0px 5px #a3a3a3;
+$link:#507daf;
 $contentheight:190px;
 
 // 省略一行
@@ -7,6 +8,14 @@ $contentheight:190px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+//禁止选择文字
+@mixin select {
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .contenttitle {
@@ -53,6 +62,11 @@ $contentheight:190px;
     pointer-events: none;
   }
 }
+.smalltitle {
+  font-size: 15px;
+  font-weight: 700;
+  padding: 20px 0;
+}
 
 ::-webkit-scrollbar {
   width: 5px;
@@ -67,3 +81,5 @@ $contentheight:190px;
   border-radius: 10px;
   background: white;
 }
+
+

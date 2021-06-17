@@ -3,7 +3,7 @@
     <header-nav v-if="!isminiMode"></header-nav>
     <div class="maincontent" v-if="!isminiMode">
       <div class="left"><side-nav></side-nav></div>
-      <div class="right"><router-view/></div>
+      <div class="right" v-if="rightShow"><router-view/></div>
     </div>
     <bottom-player></bottom-player>
   </div>
@@ -15,6 +15,11 @@ import sideNav from '@/components/sideNav.vue'
 import bottomPlayer from '@/components/bottom/bottomPlayer.vue'
 export default {
   name: "home",
+  data() {
+    return {
+      rightShow:true,
+    }
+  },
   components:{
     HeaderNav,
     sideNav,
@@ -25,12 +30,23 @@ export default {
       return this.$store.state.isminiMode
     }
   },
+  provide(){
+    return {
+      reload : this.reload
+    }
+  },
   methods: {
     hidePop(){
       this.$store.state.userpopShow = false
       this.$store.state.colorpopShow = false
       this.$store.state.messegepopShow = false
       this.$store.state.playlistShow = false
+    },
+    reload(){
+      this.rightShow = false
+      this.$nextTick(function(){
+        this.rightShow = true
+      })
     }
   },
 }
