@@ -227,6 +227,7 @@ export default {
     },
     playall() {
       this.$store.commit("playall");
+      this.$store.commit('getmusicurl',this.$store.state.webplaylist.tracks[0].id)
     },
     playmusic(item){
       this.$store.commit('getmusicurl',item.id)
