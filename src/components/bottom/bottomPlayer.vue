@@ -27,12 +27,12 @@
     <div class="control" v-if="!isminiMode">
       <div class="topcontrol">
         <div class="playmode"><span class="iconfont">&#xe6a0;</span></div>
-        <div class="lastsong"><span class="iconfont">&#xe60c;</span></div>
+        <div class="lastsong" @click="lastsong()"><span class="iconfont">&#xe60c;</span></div>
         <div class="play" @click="controlplay()">
           <span class="iconfont" v-if="!isplay">&#xe60a;</span>
           <span class="iconfont" v-else>&#xe60b; </span>
         </div>
-        <div class="nextsong"><span class="iconfont">&#xe60d;</span></div>
+        <div class="nextsong" @click="nextsong()"><span class="iconfont">&#xe60d;</span></div>
         <div class="desklyric">词</div>
       </div>
       <div class="bottombar">
@@ -139,6 +139,9 @@ export default {
     currentmusicinfo() {
       this.musicinfo = this.$store.state.musicinfo;
     },
+    currentmusicid(){
+      this.$store.commit('getmusicurl',this.$store.state.musicid)
+    }
   },
   computed: {
     getredbar() {
@@ -149,6 +152,9 @@ export default {
     },
     currentmusicinfo() {
       return this.$store.state.musicinfo;
+    },
+    currentmusicid(){
+      return this.$store.state.musicid;
     },
     isminiMode() {
       return this.$store.state.isminiMode;
@@ -171,6 +177,12 @@ export default {
         this.$refs.music.pause();
         this.getprogress(1);
       }
+    },
+    lastsong(){
+      this.$store.commit('lastsong')
+    },
+    nextsong(){
+      this.$store.commit('nextsong')
     },
     gettime() {
       this.musicduration = this.$refs.music.duration;

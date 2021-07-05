@@ -171,4 +171,11 @@ export const indexApi = {
       params,
     });
   },
+  playlistcollector:async function(params) {
+    return axios({
+      url: URL.playlistcollector,
+      method: "get",
+      params,
+    });
+  },
 }

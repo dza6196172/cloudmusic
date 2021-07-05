@@ -158,6 +158,18 @@
       </div>
       <page-tab @changePage="changeCommentPage" :currentPage="commentPage" :total="commentcount" :pageSize="pagesize"></page-tab>
     </div>
+    <div class="collector" v-show="webplaylist.tracks && snavlist[2].isactive" ref="collector">
+      <div class="collectoritem" v-for="(item,index) in collectorlist" :key="index">
+        <div class="avatar">
+          <img :src="item.avatarUrl" alt="" height="50px" width="50px">
+        </div>
+        <div class="username">
+          <div class="name">{{item.nickname}}</div>
+          <div class="desc">{{item.signature}}</div>
+        </div>
+      </div>
+      <page-tab @changePage="changecollectorPage" :currentPage="collectorPage" :total="collectorcount" :pageSize="pagesize"></page-tab>
+    </div>
   </div>
 </template>
 
@@ -173,11 +185,14 @@ export default {
       isfold: true,
       limit: 140,
       commentcount: 0,
+      collectorcount:0,
       pagesize:60,
       commenttext: "",
       newcommentlist: [],
       hotcommentlist: [],
+      collectorlist:[],
       commentPage:1,
+      collectorPage:1,
       snavlist: [
         {
           name: "歌曲列表",
@@ -203,7 +218,8 @@ export default {
   },
   created() {
     this.$store.commit("getplaylist", this.$route.params.id);
-    this.getplaylistcomment(0)
+    this.getplaylistcomment(0);
+    this.getplaylistcollector(0);
   },
   computed: {
     ...mapState(["webplaylist"]),
@@ -224,6 +240,17 @@ export default {
             this.hotcommentlist = res.hotComments;
           }
         });
+    },
+    getplaylistcollector(page){
+      indexApi.playlistcollector({
+        id: this.$route.params.id,
+        cookie: this.$storage.get("token"),
+        limit: this.pagesize,
+        offset:page*this.pagesize
+      }).then(res => {
+        this.collectorlist = res.subscribers
+        this.collectorcount = res.total
+      })
     },
     playall() {
       this.$store.commit("playall");
@@ -251,6 +278,13 @@ export default {
       this.commentPage = page
       this.getplaylistcomment(page-1)
       this.$refs.newcomment.scrollIntoView({behavior:'smooth'});
+    },
+    changecollectorPage(page){
+      if(page == this.collectorPage){
+        return
+      }
+      this.collectorPage = page
+      this.getplaylistcollector(page-1)
     }
   },
 };
@@ -530,6 +564,40 @@ export default {
             color: #9f9f9f;
           }
         }
+      }
+    }
+  }
+}
+.collector{
+  padding: 0 30px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+  .collectoritem{
+    width: 300px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    .avatar{
+      width: 50px;
+      height: 50px;
+      overflow: hidden;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-right: 10px;
+    }
+    .username{
+      width: 80%;
+      .name{
+        font-size: 14px;
+        color: #373737;
+        @include nowrap();
+      }
+      .desc{
+        font-size: 12px;
+        color: #373737;
+        @include nowrap();
       }
     }
   }

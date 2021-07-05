@@ -28,4 +28,5 @@ export default URL = {
   userplaylist:'/user/playlist',//获取用户歌单
   playlistdetail:'/playlist/detail',//获取歌单详情
   playlistcomment:'/comment/playlist',//获取歌单评论
+  playlistcollector:'/playlist/subscribers',//歌单收藏者
 }
